@@ -1,0 +1,57 @@
+BREAKOUT: LABORATORY EDITION
+
+BREAKOUT VARIANT:
+I thought that the Centipong variant was interesting for three reasons. First, the motion of the centipedes made the game unique because the traditional Breakout only has motion for the paddle and ball, yet the centipede motion was simple enough (only linear) that it would be relatively simple to implement with JavaFX. Also, the mushrooms positioned between the blocks and paddle were an interesting feature because the ball sometimes bounced off of them. Having objects other than blocks for the ball to bounce off of made the game more challenging. Finally, the slow motion was an entertaining yet feasible power-up idea.
+
+MY PROJECT:
+I plan to create a chemistry-themed Breakout game with laboratory-related features. The paddle will be a hot plate, the ball will be a stir bar, and the blocks will be “glass” since chemistry labs have a lot of glassware. The logo will incorporate the periodic table symbol for bromine, “Br,” into the word “Breakout.”
+
+Similar to Centipong, one power-up will be speeding up the ball, rather than slow motion.
+
+LEVELS:
+Each level will contain a) a block area at the top with blocks with a trapped piece of lab equipment, b) an open area in the middle, and c) a paddle at the bottom. The levels will get harder both by having a larger number of blocks to break and, as a consequence, having blocks increasingly close to the paddle. 
+
+Level 1. In this level, the blocks will be generated in a pattern of 3x3 squares with 8 blocks along the perimeter and no block in the middle. There will be one beaker (see “lab equipment”).
+
+Level 2. Here, the blocks will be generated in a pattern of rows and columns, perhaps skipping 3 or 4 spaces between each row and column. This pattern will extend further into the open space than in Level 1. There will be one Bunsen burner (see “lab equipment”).
+
+Level 3. In the final level, the blocks will be generated in a checkerboard pattern (extending even further into the open area than in previous levels), with every other space filled by a block. There will be one NMR (see “lab equipment”).
+
+BLOCKS:
+1. Glassware block – This will be the most basic block, breaking after one hit and colored to look like glass. It is worth 1 point.
+2. Chemical block – These blocks will have chemicals that, when paired with lab equipment, will break (see “lab equipment”). They are worth 2 points.
+3. Powerup block – These blocks, when broken, will give the player a powerup (see “Power-Ups”). They are worth 3 points.
+
+POWER-UPS:
+When a power up block is broken, an icon will appear indicating it is in storage. Pressing the space bar will active it. Pressing the space bar again will deactivate the power up (the player will have all three for the remainder of the level).
+
+1. HCl (Hydrochloric acid) – When activated and the ball hits a block, if any of the eight spaces around that block also have a block, those blocks will also break. (HCl is acidic, so it “dissolves” a lot of blocks.)
+
+2. MSDS Safety Sheet – When activated, the size of the paddle will double for the rest of the level (“safer,” consistent with a safety sheet).
+
+3. Catalyst – When activated, the ball will become faster for the rest of the level like a catalyst (by quadrupling the y velocity component – compare with “Paddle, Ball Speed” ability, which doubles the y velocity component).
+
+CHEAT KEYS:
+“B” – This key will restore all lives in a level. (“B” stands for “Burn” – see “Lives”).
+“C” – This key clears all the blocks from the level except for the Chemical blocks, so the player can focus on the lab equipment.
+“1”, “2”, “3” – These keys will jump to the corresponding level.
+
+LAB EQUIPMENT (SOMETHING EXTRA):
+One piece of lab equipment will be placed within the block area of each level. Each piece of lab equipment will correspond to a Chemical block that can only be broken once that piece of lab equipment is picked up (as indicated by an icon in the toolbar).
+
+PADDLE:
+The paddle will be a hot plate image and move as in conventional Breakout. Two of these abilities will be activated by pressing keys and deactivated by pressing the same keys.
+1)	“Q” – “Ball Speed” – This ability makes ball go faster (by doubling the y velocity component). Compare with “Catalyst,” which quadruples the y velocity component.
+2)	“W” – “Paddle Speed” – This ability makes the paddle move left/right faster.
+3)	MSDS Safety Sheet powerup – The size of the paddle doubles (see “powerups”). 
+
+LIVES:
+Lives will be called “chemical burns” to match with the chemistry theme, and will be indicated by a fire icon in the toolbar. When the ball hits the bottom edge of the screen, a life is lost. Each level begins with 3 lives, and when all are lost, it is Game Over and the player must restart from Level 1.
+
+TOOLBAR:
+This will contain:
+1)	An “L” whose color indicates whether that level’s piece of lab equipment is in storage
+2)	Area with powerup icons indicating whether they are in storage
+3)	Score (see “Blocks” section)
+4)	A number next to a fire icon indicating number of lives (“burns”) left
+5)	The level number
