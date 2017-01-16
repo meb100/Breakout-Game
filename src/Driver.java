@@ -24,7 +24,6 @@ public class Driver extends Application {
 	//Level-related constants/variables
 	public static final int numLevels = 3;
 	public static Level[] levels = new Level[numLevels];
-	//public static ArrayList<GameObject> shapes = new ArrayList<>(); //can change to a new class later so no need for indexing scheme
 	
 	public static void main(String[] args){
 		launch(args);
@@ -35,7 +34,7 @@ public class Driver extends Application {
 		//Startup startup = new Startup(primaryStage, SCREEN_BASE, SCREEN_HEIGHT);
 		//startup.run();
 		for(int i = 0; i < numLevels; i++){
-			levels[i] = new Level(i + 1, primaryStage, /*shapes,*/ SCREEN_BASE, SCREEN_HEIGHT); //i is level number
+			levels[i] = new Level(i + 1, primaryStage, SCREEN_BASE, SCREEN_HEIGHT); //i is level number
 			levels[i].run();
 		}
 	}
