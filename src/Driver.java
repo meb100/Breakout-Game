@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -22,8 +20,8 @@ public class Driver extends Application {
 	//Animation timing constants
 	public static final int FRAME_DELAY_MILLISECONDS = 15;
 	//Level-related constants/variables
-	public static final int numLevels = 3;
-	public static Level[] levels = new Level[numLevels];
+	public static final int NUM_LEVELS = 3;
+	public static Level[] levels = new Level[NUM_LEVELS];
 	
 	public static void main(String[] args){
 		launch(args);
@@ -33,8 +31,8 @@ public class Driver extends Application {
 		//Startup and Level classes know when to terminate themselves
 		//Startup startup = new Startup(primaryStage, SCREEN_BASE, SCREEN_HEIGHT);
 		//startup.run();
-		for(int i = 0; i < numLevels; i++){
-			levels[i] = new Level(i + 1, primaryStage, SCREEN_BASE, SCREEN_HEIGHT); //i is level number
+		for(int i = 0; i < NUM_LEVELS; i++){
+			levels[i] = new Level(i + 1, primaryStage, SCREEN_BASE, SCREEN_HEIGHT, FRAME_DELAY_MILLISECONDS); //i is level number
 			levels[i].run();
 		}
 	}

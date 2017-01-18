@@ -16,5 +16,12 @@ import javafx.util.Duration;
 public interface GameObject {
 	//dilemma: Glassware blocks aren't images, so what type should this return? Lowest common superclass between Image and Shape is Object...
 	public ImageView getJavaFXShape();
-	public void step(); 
+	public double getX();
+	public double getY();
+	public void setX(double newX);
+	public void setY(double newY);
+	public double getWidth();
+	public double getHeight();
+	public void setWidth(double newWidth);
+	public void setHeight(double newHeight);
 }

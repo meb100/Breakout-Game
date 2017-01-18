@@ -1,0 +1,15 @@
+Notes to Myself:
+
+Decision: Do not use GameObject AL because every method you call on one of its elements must
+be specified in the GameObject interface - certainly isn't the case a lot of the time!
+For now, just declare GameObjects separately, can make storage class later.
+
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=425554
+Duplicate class issue resolved (Project Explorer vs. Package Explorer)
+Hi, this is actually not really a Mylyn issue but is just the behaviour of the Project Explorer which shows those resources twice by default (whereas I think the Package Explorer always hides these duplicates). You can hide the duplicates by going to the Project Explorer view menu (triangle at top-right of the view) and selecting Customize View -> Content and unchecking Resources.
+
+Following for typical shapes are all doubles:
+getX(), getY(), getWidth(), getHeight()
+
+Yucky Bug I May Change Later:
+Change window size --> Bounce off of same width/height boundaries
