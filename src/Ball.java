@@ -14,18 +14,20 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Ball implements GameObject {
+	public static final int INITIAL_XVEL = 150;
+	public static final int INITIAL_YVEL = 150;
 	private int xVel;
 	private int yVel;
 	private final String imageFilename = "StirBar.jpg";
 	private ImageView imageView; //Just use imageView's x and y to keep track of position
-	public Ball(double initX, double initY, int initXVel, int initYVel){
-		xVel = initXVel;
-		yVel = initYVel;
+	public Ball(double initX, double initY){
+		xVel = INITIAL_XVEL;
+		yVel = INITIAL_YVEL;
 		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
-		imageView.setFitWidth(50);
-		imageView.setFitHeight(15);
-		imageView.setX(initX);
-		imageView.setY(initY);
+		setWidth(25);
+		setHeight(7);
+		setX(initX);
+		setY(initY);
 	}
 	//Accessors and modifiers
 	public double getX(){
@@ -81,12 +83,26 @@ public class Ball implements GameObject {
         if(getY() <= 0)
         	yVel *= -1;
 	}
-	public void collisionWithPaddle(){
-		return;
+	public void collisionWithPaddle(Paddle paddle){  //Perhaps come back at end to deal with edge cases of hitting paddle from sides other than top
+		bounceOff(paddle);
 	}
-	public void collisionWithBlock(){
-		return;
+	public void collisionWithBlock(Block block){
+		bounceOff(block);
 	}
+	private void bounceOff(GameObject otherObject){ //Do later if time
+		yVel *= -1;
+		/*
+		if(whichSideHit(otherObject).equals("Left") || whichSideHit(otherObject).equals("Right")))
+			xVel *= -1;
+		else if(whichSideHit(otherObject).equals("Top") || whichSideHit(otherObject).equals("Bottom")))
+			yVel *= -1;
+			*/
+	}
+	/*
+	private String whichSideHit(GameObject otherObject){  //returns "Top", "Bottom", "Left","Right"
+		
+	}
+	*/
 	public void collisionWithLabEquipment(){
 		return;
 	}

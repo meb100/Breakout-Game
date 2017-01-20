@@ -13,24 +13,13 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class GlasswareBlock implements Block{ //and since Block interface extends GameObject interface, must implement GameObject methods too!
+public abstract class PowerupBlock implements Block{ //and since Block interface extends GameObject interface, must implement GameObject methods too!
 	public ImageView imageView;
-	public final String imageFilename = "glassware.jpg"; //https://www.amazon.com/Corning-1000-600-Graduated-Graduation-Interval/dp/B004DGIII8
 	
-	public GlasswareBlock(double initX, double initY, double w, double h){
-		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
-		imageView.setFitWidth(w);
-		imageView.setFitHeight(h);
-		imageView.setX(initX);
-		imageView.setY(initY);
-	}
+	//No constructor - see subclasses
 	//From Block interface
 	@Override
-	public void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) { //Paddle only for MSDS Block, consider refactoring
-		//Disappears
-		group.getChildren().remove(getJavaFXShape());
-		grid.setBlock(null, r, c);
-	}
+	public abstract void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c); //Paddle only for MSDS block, consider refactoring
 
 	//Rest from GameObject interface - consider implementing these all in GameObject interface and make it a class!
 	@Override

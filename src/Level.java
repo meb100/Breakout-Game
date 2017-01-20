@@ -20,10 +20,12 @@ public class Level {
 	private final int SCREEN_BASE;
 	private final int SCREEN_HEIGHT;
 	public final int FRAME_DELAY_MILLISECONDS;
+	public Group objectCollection;
 	
 	public Ball ball;
 	//public GlasswareBlock block;
 	public BlockGrid blockGrid;
+	public Paddle paddle;
 	//Add more GameObjects here!
 	
 	public Level(int n, Stage s, int b, int h, int d){
@@ -47,17 +49,19 @@ public class Level {
 		t.play();
 	}
 	private Scene initializeGameObjects(){
-		Group objectCollection = new Group();
+		objectCollection = new Group();
 		Scene scene = new Scene(objectCollection, SCREEN_BASE, SCREEN_HEIGHT, BACKGROUND_COLOR); 
 		
 		//Instantiate GameObjects (yes, even the ball and paddle are different instances in between levels)
 		//Note constructor automatically instantiates ImageView/Rectangle/Circle/etc JavaFX Shapes
-		ball = new Ball(200.0, 200.0, 150, 150);
+		ball = new Ball(200.0, 450.0);
 		//block = new GlasswareBlock(50.0, 50.0);
 		blockGrid = new BlockGrid(levelNum, SCREEN_BASE, SCREEN_HEIGHT, 50.0, 15.0, 5.0);
+		paddle = new Paddle(200.0, 550.0, 5);
 		//Group ordering
 		objectCollection.getChildren().add(ball.getJavaFXShape());
 		//objectCollection.getChildren().add(block.getJavaFXShape());
+		objectCollection.getChildren().add(paddle.getJavaFXShape());
 		for(int r = 0; r < blockGrid.getRows(); r++){
 			for(int c = 0; c < blockGrid.getCols(); c++){
 				if(blockGrid.getBlock(r, c) != null)
@@ -65,7 +69,8 @@ public class Level {
 			}
 		}
 		//Now all the GameObjects ARE drawn in their initial positions
-		//Add keyboard feature setup (cheat codes) here later
+		//Add keyboard feature setup (cheat codes, paddle movement) here later
+        scene.setOnKeyPressed(e -> keyboardInput(e.getCode()));
 		//Return
 		return scene;
 	}
@@ -74,6 +79,31 @@ public class Level {
 		//Update positions of Ball and Paddle
 		ball.updateLocation(FRAME_DELAY_SECONDS, SCREEN_BASE, SCREEN_HEIGHT);
 		//Take care of collisions
+		//Ball-Paddle
+		if(gameObjectsIntersect(ball, paddle)){
+			ball.collisionWithPaddle(paddle);
+		}
+		//Ball-Block
+		for(int r = 0; r < blockGrid.getRows(); r++){
+			for(int c = 0; c < blockGrid.getCols(); c++){
+				//Short circuiting
+				if(blockGrid.getBlock(r, c) != null && gameObjectsIntersect(ball, blockGrid.getBlock(r, c))){
+					ball.collisionWithBlock(blockGrid.getBlock(r,c));
+					blockGrid.getBlock(r, c).collisionWithBall(objectCollection, paddle, ball, blockGrid, r, c);
+				}
+			}
+		}
+	}
+	private boolean gameObjectsIntersect(GameObject obj1, GameObject obj2){
+		return obj1.getJavaFXShape().getBoundsInParent().intersects(obj2.getJavaFXShape().getBoundsInParent());
+	}
+	private void keyboardInput(KeyCode code){
+		if(code == KeyCode.RIGHT){
+			paddle.moveRight(SCREEN_BASE);
+		}
+		else if(code == KeyCode.LEFT){
+			paddle.moveLeft();
+		}
 	}
 
 }

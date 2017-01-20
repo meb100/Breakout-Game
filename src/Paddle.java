@@ -13,32 +13,25 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class GlasswareBlock implements Block{ //and since Block interface extends GameObject interface, must implement GameObject methods too!
-	public ImageView imageView;
-	public final String imageFilename = "glassware.jpg"; //https://www.amazon.com/Corning-1000-600-Graduated-Graduation-Interval/dp/B004DGIII8
+public class Paddle implements GameObject{
+	private int vel; //just x direction!
+	private ImageView imageView;
+	private final String imageFilename = "HotPlate.jpg"; //https://www.nist.gov/laboratories/tools-instruments/corning-pc-420-stirrer-hot-plate
+	public static final int INITIAL_WIDTH = 70;
 	
-	public GlasswareBlock(double initX, double initY, double w, double h){
+	public Paddle(double initX, double initY, int initVel){
+		vel = initVel;
 		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
-		imageView.setFitWidth(w);
-		imageView.setFitHeight(h);
-		imageView.setX(initX);
-		imageView.setY(initY);
+		setWidth(INITIAL_WIDTH);
+		setHeight(20);
+		setX(initX);
+		setY(initY);
 	}
-	//From Block interface
 	@Override
-	public void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) { //Paddle only for MSDS Block, consider refactoring
-		//Disappears
-		group.getChildren().remove(getJavaFXShape());
-		grid.setBlock(null, r, c);
-	}
-
-	//Rest from GameObject interface - consider implementing these all in GameObject interface and make it a class!
-	@Override
-	public ImageView getJavaFXShape() {
+	public ImageView getJavaFXShape(){
 		return imageView;
 	}
 
-	@Override
 	public double getX(){
 		return imageView.getX();
 	}
@@ -52,7 +45,7 @@ public class GlasswareBlock implements Block{ //and since Block interface extend
 	public void setY(double newY){
 		imageView.setY(newY);
 	}
-	@Override
+
 	public double getWidth() {
 		return imageView.getFitWidth();
 	}
@@ -69,4 +62,23 @@ public class GlasswareBlock implements Block{ //and since Block interface extend
 		imageView.setFitHeight(newHeight);
 	}
 	
+	//Velocity getters and selectors
+	public int getVelocity(){
+		return vel;
+	}
+	public void setVelocity(int v){
+		vel = v;
+	}
+	
+	//Movement methods
+	public void moveRight(int screen_width){
+		if(getX() + getWidth() < screen_width){
+			setX(getX() + vel);
+		}
+	}
+	public void moveLeft(){
+		if(getX() > 0){
+			setX(getX() - vel);
+		}
+	}
 }
