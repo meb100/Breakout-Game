@@ -16,7 +16,25 @@ public class BlockGrid {
 		grid = new Block[rows][cols];
 		
 		if(level == 1){
+			rows = 2; //for testing purposes
 			
+			int blockNum = 1;
+			double xPos = spacing;
+			double yPos = spacing;
+			for(int r = 0; r < rows; r++){
+				for(int c = 0; c < cols; c++){
+					if(blockNum % 10 == 0){
+						grid[r][c] = new HClBlock(xPos, yPos, block_width, block_height);
+					}
+					else if(blockNum % 2 == 0){
+						grid[r][c] = new GlasswareBlock(xPos, yPos, block_width, block_height); //note the constructor of GlasswareBlock already draws in on screen! No need to call drawSelf()
+					}
+					xPos += (spacing + block_width);
+					blockNum++;
+				}
+				xPos = spacing;
+				yPos += (spacing + block_height);
+			}
 		}
 		else if(level == 2){
 			

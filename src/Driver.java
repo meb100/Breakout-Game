@@ -31,9 +31,13 @@ public class Driver extends Application {
 		//Startup and Level classes know when to terminate themselves
 		//Startup startup = new Startup(primaryStage, SCREEN_BASE, SCREEN_HEIGHT);
 		//startup.run();
+		Level level = new Level(1, primaryStage, SCREEN_BASE, SCREEN_HEIGHT, FRAME_DELAY_MILLISECONDS);
+		level.run();
+		/*
 		for(int i = 0; i < NUM_LEVELS; i++){
 			levels[i] = new Level(i + 1, primaryStage, SCREEN_BASE, SCREEN_HEIGHT, FRAME_DELAY_MILLISECONDS); //i is level number
 			levels[i].run();
 		}
+		*/
 	}
 }

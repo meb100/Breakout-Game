@@ -14,20 +14,22 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Ball implements GameObject {
+	public static final double INITIAL_X = 200.0;
+	public static final double INITIAL_Y = 450.0;
 	public static final int INITIAL_XVEL = 150;
 	public static final int INITIAL_YVEL = 150;
 	private int xVel;
 	private int yVel;
 	private final String imageFilename = "StirBar.jpg";
 	private ImageView imageView; //Just use imageView's x and y to keep track of position
-	public Ball(double initX, double initY){
+	public Ball(){
 		xVel = INITIAL_XVEL;
 		yVel = INITIAL_YVEL;
 		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
 		setWidth(25);
 		setHeight(7);
-		setX(initX);
-		setY(initY);
+		setX(INITIAL_X);
+		setY(INITIAL_Y);
 	}
 	//Accessors and modifiers
 	public double getX(){
@@ -66,22 +68,60 @@ public class Ball implements GameObject {
 	//Collision with Paddle
 	//Collision with Block
 	//Collision with LabEquipment
-	public void updateLocation(double delay_sec, int width, int height){ //also deal with wall collisions here
+	public void updateLocation(Scorebar scorebar, double delay_sec, int width, int height){ //also deal with wall collisions here
 		//Update position
 		setX(getX() + xVel*delay_sec);
 		setY(getY() + yVel*delay_sec);
 		//Collisions with walls
-        if(getX() + getWidth() >= width)
+		//right wall
+        if(beyondRightWall(width)){
         	xVel *= -1;
+        	/*
+        	System.out.println("Right");
+            System.out.println("x = " + getX() + " y = " + getY());
+            */
+        }
         //left wall
-        if(getX() <= 0)
+        if(beyondLeftWall()){
         	xVel *= -1;
+        	/*
+        	System.out.println("Left");
+            System.out.println("x = " + getX() + " y = " + getY());
+            */
+        }
         //top wall
-        if(getY() + getHeight() >= height)
+        if(beyondTopWall()){
         	yVel *= -1;
+        	/*
+        	System.out.println("Top");
+            System.out.println("x = " + getX() + " y = " + getY());
+            */
+        }
         //bottom wall
-        if(getY() <= 0)
+        if(beyondBottomWall(height)){
         	yVel *= -1;
+        	/*
+        	System.out.println("Bottom");
+            System.out.println("x = " + getX() + " y = " + getY());
+            */
+        	//Reset ball location
+        	setX(INITIAL_X);
+        	setY(INITIAL_Y);
+        	//Decrement lives
+        	scorebar.decrementLivesLeft();
+        }
+	}
+	private boolean beyondRightWall(int width){
+		return getX() + getWidth() >= width;
+	}
+	private boolean beyondLeftWall(){
+		return getX() <= 0;
+	}
+	private boolean beyondTopWall(){
+		return getY() <= 0;
+	}
+	private boolean beyondBottomWall(int height){
+		return getY() + getHeight() >= height;
 	}
 	public void collisionWithPaddle(Paddle paddle){  //Perhaps come back at end to deal with edge cases of hitting paddle from sides other than top
 		bounceOff(paddle);

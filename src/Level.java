@@ -26,6 +26,7 @@ public class Level {
 	//public GlasswareBlock block;
 	public BlockGrid blockGrid;
 	public Paddle paddle;
+	public Scorebar scorebar;
 	//Add more GameObjects here!
 	
 	public Level(int n, Stage s, int b, int h, int d){
@@ -54,10 +55,11 @@ public class Level {
 		
 		//Instantiate GameObjects (yes, even the ball and paddle are different instances in between levels)
 		//Note constructor automatically instantiates ImageView/Rectangle/Circle/etc JavaFX Shapes
-		ball = new Ball(200.0, 450.0);
+		ball = new Ball();
 		//block = new GlasswareBlock(50.0, 50.0);
 		blockGrid = new BlockGrid(levelNum, SCREEN_BASE, SCREEN_HEIGHT, 50.0, 15.0, 5.0);
 		paddle = new Paddle(200.0, 550.0, 5);
+		scorebar = new Scorebar(levelNum);
 		//Group ordering
 		objectCollection.getChildren().add(ball.getJavaFXShape());
 		//objectCollection.getChildren().add(block.getJavaFXShape());
@@ -68,6 +70,9 @@ public class Level {
 					objectCollection.getChildren().add(blockGrid.getBlock(r, c).getJavaFXShape());
 			}
 		}
+		objectCollection.getChildren().add(scorebar.getJavaFXShape());
+		
+		
 		//Now all the GameObjects ARE drawn in their initial positions
 		//Add keyboard feature setup (cheat codes, paddle movement) here later
         scene.setOnKeyPressed(e -> keyboardInput(e.getCode()));
@@ -76,8 +81,8 @@ public class Level {
 	}
 	private void step(){
 		final double FRAME_DELAY_SECONDS = FRAME_DELAY_MILLISECONDS / 1000.0;
-		//Update positions of Ball and Paddle
-		ball.updateLocation(FRAME_DELAY_SECONDS, SCREEN_BASE, SCREEN_HEIGHT);
+		//Update positions of Ball and Paddle - Also takes care of ball-wall collisions, including bottom wall
+		ball.updateLocation(scorebar, FRAME_DELAY_SECONDS, SCREEN_BASE, SCREEN_HEIGHT);
 		//Take care of collisions
 		//Ball-Paddle
 		if(gameObjectsIntersect(ball, paddle)){
@@ -88,10 +93,38 @@ public class Level {
 			for(int c = 0; c < blockGrid.getCols(); c++){
 				//Short circuiting
 				if(blockGrid.getBlock(r, c) != null && gameObjectsIntersect(ball, blockGrid.getBlock(r, c))){
+					//Update Scorebar - make sure to do BEFORE remove blocks!
+					if(blockGrid.getBlock(r, c) instanceof GlasswareBlock){
+						scorebar.incrementScore(1);
+					}
+					else if(blockGrid.getBlock(r, c) instanceof PowerupBlock){
+						scorebar.incrementScore(3);
+					}
+					//Run Ball and BlockGrid methods
 					ball.collisionWithBlock(blockGrid.getBlock(r,c));
-					blockGrid.getBlock(r, c).collisionWithBall(objectCollection, paddle, ball, blockGrid, r, c);
+					blockGrid.getBlock(r, c).collisionWithBall(objectCollection, scorebar, paddle, ball, blockGrid, r, c);
 				}
 			}
+		}
+		//Update Scorebar
+		scorebar.drawScorebar();
+		//If game over, stop the animation and erase scene
+		if(scorebar.getLivesLeft() <= 0){
+			System.out.println("Game over"); //Modify here later
+			System.exit(0);
+		}
+		//If won level, stop the animation and erase scene
+		boolean allBlocksNull = true;
+		for(int r = 0; r < blockGrid.getRows(); r++){
+			for(int c = 0; c < blockGrid.getCols(); c++){
+				if(blockGrid.getBlock(r, c) != null){
+					allBlocksNull = false;
+				}
+			}
+		}
+		if(allBlocksNull){
+			System.out.println("Won level"); //Modify here later
+			System.exit(0);
 		}
 	}
 	private boolean gameObjectsIntersect(GameObject obj1, GameObject obj2){

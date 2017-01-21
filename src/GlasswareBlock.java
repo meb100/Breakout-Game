@@ -26,7 +26,7 @@ public class GlasswareBlock implements Block{ //and since Block interface extend
 	}
 	//From Block interface
 	@Override
-	public void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) { //Paddle only for MSDS Block, consider refactoring
+	public void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) { //Paddle only for MSDS Block, consider refactoring
 		//Disappears
 		group.getChildren().remove(getJavaFXShape());
 		grid.setBlock(null, r, c);

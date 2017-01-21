@@ -1,3 +1,5 @@
+import java.util.logging.Level;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -26,11 +28,21 @@ public class HClBlock extends PowerupBlock{
 	}
 	
 	@Override
-	public void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) {
+	public void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) {
 		//Clear 8 surrounding blocks and hit block as well - be sure to consider edges of grid!
 		for(int dr = -1; dr <= 1; dr++)
 			for(int dc = -1; dc <= 1; dc++){
 				if(r + dr >= 0 && r + dr < grid.getRows() && c + dc >= 0 && c + dc < grid.getCols() && grid.getBlock(r + dr, c + dc) != null){
+					//Update Scorebar - make sure to do BEFORE remove blocks!
+					if(dr != 0 || dc != 0){
+						if(grid.getBlock(r + dr, c + dc) instanceof GlasswareBlock){
+							scorebar.incrementScore(1);
+						}
+						else if(grid.getBlock(r + dr, c + dc) instanceof PowerupBlock){
+							scorebar.incrementScore(3);
+						}
+					}
+					//Remove
 					group.getChildren().remove(grid.getBlock(r+dr, c+dc).getJavaFXShape());
 					grid.setBlock(null, r + dr, c + dc);   //Consider making a removeBlock() method for these 2 lines in BlockGrid class
 				}

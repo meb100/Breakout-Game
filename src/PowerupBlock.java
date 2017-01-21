@@ -17,9 +17,6 @@ public abstract class PowerupBlock implements Block{ //and since Block interface
 	public ImageView imageView;
 	
 	//No constructor - see subclasses
-	//From Block interface
-	@Override
-	public abstract void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c); //Paddle only for MSDS block, consider refactoring
 
 	//Rest from GameObject interface - consider implementing these all in GameObject interface and make it a class!
 	@Override

@@ -14,5 +14,5 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public interface Block extends GameObject{
-	public void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c);
+	public void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c);
 }

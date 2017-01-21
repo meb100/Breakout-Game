@@ -26,7 +26,7 @@ public class CatalystBlock extends PowerupBlock{
 	}
 	
 	@Override
-	public void collisionWithBall(Group group, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) {
+	public void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) {
 		//Disappears
 		group.getChildren().remove(getJavaFXShape());
 		grid.setBlock(null, r, c);
