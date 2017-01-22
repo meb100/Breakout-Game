@@ -25,6 +25,8 @@ public class Driver extends Application {
 	public static final int NUM_LEVELS = 3;
 	public static Screen[] screens = new Screen[NUM_LEVELS + 1];
 	private int currentScreenNumber;  //0-indexed
+	//Added during refactoring, from other classes
+	
 	
 	public static void main(String[] args){
 		launch(args);

@@ -24,6 +24,8 @@ https://coderanch.com/t/580998/java/remove-node
 https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=java%20can%20abstract%20class%20have%20constructor
 http://stackoverflow.com/questions/22014950/javafx-moving-image-with-arrow-keys-and-spacebar
 http://stackoverflow.com/questions/23394547/how-do-i-remove-a-scene-in-a-stage-in-javafx
+https://www.tutorialspoint.com/java/java_documentation.htm
+http://stackoverflow.com/questions/541920/multiple-line-code-example-in-javadoc-comment
 
 Pictures:
 https://www.reddit.com/r/everymanshouldknow/comments/4nxnbj/emsk_hazardous_materials_classification/
