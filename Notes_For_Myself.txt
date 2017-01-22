@@ -22,6 +22,7 @@ blockGrid.getBlock(r, c) --> don't forget may return null!
 
 https://coderanch.com/t/580998/java/remove-node
 https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=java%20can%20abstract%20class%20have%20constructor
+http://stackoverflow.com/questions/22014950/javafx-moving-image-with-arrow-keys-and-spacebar
 
 Pictures:
 https://www.reddit.com/r/everymanshouldknow/comments/4nxnbj/emsk_hazardous_materials_classification/

@@ -60,6 +60,7 @@ public class Scorebar {
 		h.setStyle("-fx-background-color: CORNFLOWERBLUE");
 		h.setPadding(new Insets(5,5,5,5));
 		h.setSpacing(20);
+		h.relocate(0, Driver.SCREEN_HEIGHT - 40);   //Change 40 if can figure out Node method for it
 		return h;
 	}
 	public void drawScorebar(){

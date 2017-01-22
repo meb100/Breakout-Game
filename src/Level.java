@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -13,9 +14,8 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Level {
+public class Level implements Screen{
 	private int levelNum;
-	private Stage stage;
 	private final Paint BACKGROUND_COLOR = Color.GREY;
 	private final int SCREEN_BASE;
 	private final int SCREEN_HEIGHT;
@@ -29,27 +29,22 @@ public class Level {
 	public Scorebar scorebar;
 	//Add more GameObjects here!
 	
-	public Level(int n, Stage s, int b, int h, int d){
+	private int status;
+	
+	public Level(int n,int b, int h, int d){
 		levelNum = n;
-		stage = s;
 		SCREEN_BASE = b;
 		SCREEN_HEIGHT = h;
 		FRAME_DELAY_MILLISECONDS = d;
+		status = Screen.NEEDS_SETUP;
 	}
-	public void run(){
-		//This method taken from Dr Duvall's ExampleBounce.java shell
-		Scene scene = initializeGameObjects();
-		stage.setScene(scene);
-		stage.setTitle("Breakout: Laboratory Edition. Level " + levelNum);
-		stage.show();
-		
-		KeyFrame f = new KeyFrame(Duration.millis(FRAME_DELAY_MILLISECONDS), e -> step());
-		Timeline t = new Timeline();
-		t.setCycleCount(Timeline.INDEFINITE); //will probably change when add more levels - need to research!
-		t.getKeyFrames().add(f);
-		t.play();
+	public int getStatus(){
+		return status;
 	}
-	private Scene initializeGameObjects(){
+	public void setStatus(int newStatus){
+		status = newStatus;
+	}
+	public Scene initialize(){
 		objectCollection = new Group();
 		Scene scene = new Scene(objectCollection, SCREEN_BASE, SCREEN_HEIGHT, BACKGROUND_COLOR); 
 		
@@ -58,7 +53,7 @@ public class Level {
 		ball = new Ball();
 		//block = new GlasswareBlock(50.0, 50.0);
 		blockGrid = new BlockGrid(levelNum, SCREEN_BASE, SCREEN_HEIGHT, 50.0, 15.0, 5.0);
-		paddle = new Paddle(200.0, 550.0, 5);
+		paddle = new Paddle(200.0, 525.0, 5);
 		scorebar = new Scorebar(levelNum);
 		//Group ordering
 		objectCollection.getChildren().add(ball.getJavaFXShape());
@@ -72,14 +67,16 @@ public class Level {
 		}
 		objectCollection.getChildren().add(scorebar.getJavaFXShape());
 		
+        //Change status
+        status = Screen.RUNNING;
 		
-		//Now all the GameObjects ARE drawn in their initial positions
-		//Add keyboard feature setup (cheat codes, paddle movement) here later
+		//Keyboard feature setup (cheat codes, paddle movement)
         scene.setOnKeyPressed(e -> keyboardInput(e.getCode()));
+        
 		//Return
 		return scene;
 	}
-	private void step(){
+	public void step(){
 		final double FRAME_DELAY_SECONDS = FRAME_DELAY_MILLISECONDS / 1000.0;
 		//Update positions of Ball and Paddle - Also takes care of ball-wall collisions, including bottom wall
 		ball.updateLocation(scorebar, FRAME_DELAY_SECONDS, SCREEN_BASE, SCREEN_HEIGHT);
@@ -110,8 +107,7 @@ public class Level {
 		scorebar.drawScorebar();
 		//If game over, stop the animation and erase scene
 		if(scorebar.getLivesLeft() <= 0){
-			System.out.println("Game over"); //Modify here later
-			System.exit(0);
+			status = Screen.LOST;
 		}
 		//If won level, stop the animation and erase scene
 		boolean allBlocksNull = true;
@@ -123,8 +119,7 @@ public class Level {
 			}
 		}
 		if(allBlocksNull){
-			System.out.println("Won level"); //Modify here later
-			System.exit(0);
+			status = Screen.WON;
 		}
 	}
 	private boolean gameObjectsIntersect(GameObject obj1, GameObject obj2){

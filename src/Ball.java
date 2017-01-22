@@ -16,8 +16,8 @@ import javafx.util.Duration;
 public class Ball implements GameObject {
 	public static final double INITIAL_X = 200.0;
 	public static final double INITIAL_Y = 450.0;
-	public static final int INITIAL_XVEL = 150;
-	public static final int INITIAL_YVEL = 150;
+	public static final int INITIAL_XVEL = 200;
+	public static final int INITIAL_YVEL = 100;
 	private int xVel;
 	private int yVel;
 	private final String imageFilename = "StirBar.jpg";
@@ -74,6 +74,7 @@ public class Ball implements GameObject {
 		setY(getY() + yVel*delay_sec);
 		//Collisions with walls
 		//right wall
+		
         if(beyondRightWall(width)){
         	xVel *= -1;
         	/*
@@ -104,9 +105,11 @@ public class Ball implements GameObject {
         	System.out.println("Bottom");
             System.out.println("x = " + getX() + " y = " + getY());
             */
-        	//Reset ball location
+        	//Reset ball location/velocity
         	setX(INITIAL_X);
         	setY(INITIAL_Y);
+        	setXVel(INITIAL_XVEL);
+        	setYVel(INITIAL_YVEL);
         	//Decrement lives
         	scorebar.decrementLivesLeft();
         }

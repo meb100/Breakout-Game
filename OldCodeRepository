@@ -1,0 +1,15 @@
+	/*
+	public void run(){
+		//This code taken from Dr Duvall's ExampleBounce.java shell
+		Scene scene = initializeGameObjects();
+		stage.setScene(scene);
+		stage.setTitle("Breakout: Laboratory Edition. Level " + levelNum);
+		stage.show();
+		
+		KeyFrame f = new KeyFrame(Duration.millis(FRAME_DELAY_MILLISECONDS), e -> step());
+		Timeline t = new Timeline();
+		t.setCycleCount(Timeline.INDEFINITE); //will probably change when add more levels - need to research!
+		t.getKeyFrames().add(f);
+		t.play();
+	}
+	*/
