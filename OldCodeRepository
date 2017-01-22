@@ -37,3 +37,27 @@
 			
 				    int rowsForFullScreen = (int)(screen_height / (spacing + block_height));
 	    //rows = rowsForFullScreen - (17-level); //change 17 to function of width later - need to play with this formula
+	    		/*
+		if(xVel > 0){
+			System.out.println("Left");
+			sideHit =  "Left";
+		}
+		if(xVel < 0){
+			System.out.println("Right");
+			sideHit =  "Right";
+		}
+		if(yVel > 0){
+			System.out.println("Top");
+			sideHit = "Top";
+		}
+		if(yVel < 0){
+			System.out.println("Bottom");
+			sideHit = "Bottom";
+		}
+		*/
+				/*
+		if(sideHit.equals("Left") || sideHit.equals("Right"))
+			xVel *= -1;
+		else if(sideHit.equals("Top") || sideHit.equals("Bottom"))
+			yVel *= -1;
+		*/

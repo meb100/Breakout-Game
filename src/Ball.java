@@ -132,20 +132,62 @@ public class Ball implements GameObject {
 	public void collisionWithBlock(Block block){
 		bounceOff(block);
 	}
-	private void bounceOff(GameObject otherObject){ //Do later if time
-		yVel *= -1;
-		/*
-		if(whichSideHit(otherObject).equals("Left") || whichSideHit(otherObject).equals("Right")))
-			xVel *= -1;
-		else if(whichSideHit(otherObject).equals("Top") || whichSideHit(otherObject).equals("Bottom")))
-			yVel *= -1;
-			*/
+	private void bounceOff(GameObject otherShape){
+		String sideHit = whichSideHit(otherShape);
+		if(sideHit.equals("Left")){
+			xVel = - Math.abs(xVel);
+		}
+		else if(sideHit.equals("Right")){
+			xVel = Math.abs(xVel);
+		}
+		else if(sideHit.equals("Top")){
+			yVel = - Math.abs(yVel);
+		}
+		else{
+			yVel = Math.abs(yVel);
+		}
 	}
-	/*
-	private String whichSideHit(GameObject otherObject){  //returns "Top", "Bottom", "Left","Right"
+	private String whichSideHit(GameObject otherShape){  //returns "Top", "Bottom", "Left","Right", assumes width and height of otherShape are larger than those of this, and than an intersection has occurred
+		String sideHit = ""; //Top and Bottom take precedence over Left and Right
 		
+		if(getTopY(otherShape) <= getTopY(this)
+				&& getBottomY(otherShape) >= getBottomY(this)
+				&& getLeftX(otherShape) + otherShape.getWidth() / 4 >= getRightX(this)){
+			System.out.println("Left");
+			sideHit = "Left";
+		}
+		if(getTopY(otherShape) <= getTopY(this)
+				&& getBottomY(otherShape) >= getBottomY(this)
+				&& getRightX(otherShape) - otherShape.getWidth() / 4 <= getLeftX(this)){
+			System.out.println("Right");
+			sideHit = "Right";
+		}
+		if(getLeftX(otherShape) <= getLeftX(this) 
+				&& getRightX(otherShape) >= getRightX(this)
+				&& getBottomY(otherShape) - otherShape.getHeight() / 4 <= getTopY(this)){
+			System.out.println("Bottom");
+			sideHit = "Bottom";
+		}
+		if(getLeftX(otherShape) <= getLeftX(this)
+				&& getRightX(otherShape) >= getRightX(this)
+				&& getTopY(otherShape) + otherShape.getHeight() / 4 >= getBottomY(this)){
+			System.out.println("Top");
+			sideHit = "Top";
+		}
+		return sideHit;
 	}
-	*/
+	private double getLeftX(GameObject shape){
+		return shape.getX();
+	}
+	private double getRightX(GameObject shape){
+		return shape.getX() + shape.getWidth();
+	}
+	private double getTopY(GameObject shape){
+		return shape.getY();
+	}
+	private double getBottomY(GameObject shape){
+		return shape.getY() + shape.getHeight();
+	}
 	public void collisionWithLabEquipment(){
 		return;
 	}
@@ -156,7 +198,7 @@ public class Ball implements GameObject {
 	}
 	@Override
 	public double getHeight() {
-		return imageView.getFitHeight();
+ 		return imageView.getFitHeight();
 	}
 	@Override
 	public void setWidth(double newWidth) {
