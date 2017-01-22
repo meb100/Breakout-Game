@@ -52,6 +52,9 @@ public class Scorebar {
 	public void setLevelNumber(int l){
 		levelNumber = l;
 	}
+	public void setLivesLeft(int newLives){
+		livesLeft = newLives;
+	}
 	public HBox getJavaFXShape(){
 		return box;
 	}

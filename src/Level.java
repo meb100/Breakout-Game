@@ -132,6 +132,31 @@ public class Level implements Screen{
 		else if(code == KeyCode.LEFT){
 			paddle.moveLeft();
 		}
+		//Cheat keys
+		//Restore all lives (burns)
+		else if(code == KeyCode.B){
+			scorebar.setLivesLeft(Scorebar.TOTAL_LIVES);
+		}
+		//Clear all blocks except for chemical blocks (to focus on lab equipment) - if no chemical blocks, jumps to next level
+		else if(code == KeyCode.C){
+			for(int r = 0; r < blockGrid.getRows(); r++){
+				for(int c = 0; c < blockGrid.getCols(); c++){
+					if(blockGrid.getBlock(r, c) instanceof GlasswareBlock || blockGrid.getBlock(r, c) instanceof PowerupBlock)
+						blockGrid.setBlock(null, r, c);
+				}
+			}
+		}
+		//Jump to level 1
+		else if(code == KeyCode.DIGIT1){
+			status = Screen.JUMP_TO_LEVEL_1;
+		}
+		//Jump to level 2
+		else if(code == KeyCode.DIGIT2){
+			status = Screen.JUMP_TO_LEVEL_2;
+		}
+		//Jump to level 3
+		else if(code == KeyCode.DIGIT3){
+			status = Screen.JUMP_TO_LEVEL_3;
+		}
 	}
-
 }

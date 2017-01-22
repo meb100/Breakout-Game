@@ -59,26 +59,43 @@ public class Driver extends Application {
 		}
 		else if(screens[currentScreenNumber].getStatus() == Screen.WON){
 			if(currentScreenNumber == NUM_LEVELS){   //NUM_LEVELS = (NUM_LEVELS + 1) - 1 = NUM_SCREENS - 1
-				resetGame();
+				resetToScreen(0);
 				System.out.println("Won game");
 			}
 			else{
-				currentScreenNumber++;
+				resetToScreen(currentScreenNumber + 1);
 				System.out.println("Won level");
 			}
 		}
 		else if(screens[currentScreenNumber].getStatus() == Screen.LOST){
-			resetGame();
+			resetToScreen(0);
 			System.out.println("Lost level");
+		}
+		else if(screens[currentScreenNumber].getStatus() == Screen.JUMP_TO_LEVEL_1){
+			resetToScreen(1);
+			System.out.println("Reset to level 1");
+		}
+		else if(screens[currentScreenNumber].getStatus() == Screen.JUMP_TO_LEVEL_2){
+			resetToScreen(2);
+			System.out.println("Reset to level 2");
+		}
+		else if(screens[currentScreenNumber].getStatus() == Screen.JUMP_TO_LEVEL_3){
+			resetToScreen(3);
+			System.out.println("Reset to level 3");
 		}
 		else{
 			System.out.println("Error");
 		}
 	}
-	private void resetGame(){
-		for(Screen screenToReset : screens){
-			screenToReset.setStatus(Screen.NEEDS_SETUP);
+	private void resetToScreen(int newScreenNumber){
+		for(int screenNumber = 0; screenNumber < NUM_LEVELS + 1; screenNumber++){
+			if(screenNumber < newScreenNumber){
+				screens[screenNumber].setStatus(Screen.WON);
+			}
+			else{
+				screens[screenNumber].setStatus(Screen.NEEDS_SETUP);
+			}
 		}
-		currentScreenNumber = 0;
+		currentScreenNumber = newScreenNumber;
 	}
 }
