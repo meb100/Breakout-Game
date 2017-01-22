@@ -22,7 +22,7 @@ public class Driver extends Application {
 	//Animation timing constants
 	public static final int FRAME_DELAY_MILLISECONDS = 15;
 	//Level-related constants/variables
-	public static final int NUM_LEVELS = 1;
+	public static final int NUM_LEVELS = 3;
 	public static Screen[] screens = new Screen[NUM_LEVELS + 1];
 	private int currentScreenNumber;  //0-indexed
 	
@@ -41,7 +41,7 @@ public class Driver extends Application {
 		//Do standard setup (some taken from CS 308 Lab_Bounce)
 		Scene scene = new Scene(new Group(), SCREEN_BASE, SCREEN_HEIGHT, Color.YELLOW); //blank dummy scene
 		stage.setScene(scene);
-		stage.setTitle("Breakout: Laboratory Edition.");
+		stage.setTitle("Breakout: Laboratory Edition");
 		stage.show();
 		
 		KeyFrame f = new KeyFrame(Duration.millis(FRAME_DELAY_MILLISECONDS), e -> step(stage));
@@ -59,8 +59,8 @@ public class Driver extends Application {
 		}
 		else if(screens[currentScreenNumber].getStatus() == Screen.WON){
 			if(currentScreenNumber == NUM_LEVELS){   //NUM_LEVELS = (NUM_LEVELS + 1) - 1 = NUM_SCREENS - 1
+				resetGame();
 				System.out.println("Won game");
-				System.exit(0);
 			}
 			else{
 				currentScreenNumber++;
@@ -68,14 +68,17 @@ public class Driver extends Application {
 			}
 		}
 		else if(screens[currentScreenNumber].getStatus() == Screen.LOST){
-			for(Screen screenToReset : screens){
-				screenToReset.setStatus(Screen.NEEDS_SETUP);
-			}
-			currentScreenNumber = 0;
+			resetGame();
 			System.out.println("Lost level");
 		}
 		else{
 			System.out.println("Error");
 		}
+	}
+	private void resetGame(){
+		for(Screen screenToReset : screens){
+			screenToReset.setStatus(Screen.NEEDS_SETUP);
+		}
+		currentScreenNumber = 0;
 	}
 }

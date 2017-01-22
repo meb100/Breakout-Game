@@ -11,35 +11,69 @@ public class BlockGrid {
 	    block_height = b_h;
 	    
 	    cols = (int)(screen_width / (spacing + block_width));
-	    int rowsForFullScreen = (int)(screen_height / (spacing + block_height));
-	    rows = rowsForFullScreen - (17-level); //change 17 to function of width later - need to play with this formula
-		grid = new Block[rows][cols];
+
 		
 		if(level == 1){
-			rows = 2; //for testing purposes
+			rows = 8;
+			grid = new Block[rows][cols];
 			
-			int blockNum = 1;
 			double xPos = spacing;
 			double yPos = spacing;
 			for(int r = 0; r < rows; r++){
 				for(int c = 0; c < cols; c++){
-					if(blockNum % 10 == 0){
-						grid[r][c] = new HClBlock(xPos, yPos, block_width, block_height);
+					if(r % 4 == 1 || r % 4 == 3){
+						if(c != 0 && c!= cols-1)
+							grid[r][c] = new GlasswareBlock(xPos, yPos, block_width, block_height);
 					}
-					else if(blockNum % 2 == 0){
-						grid[r][c] = new GlasswareBlock(xPos, yPos, block_width, block_height); //note the constructor of GlasswareBlock already draws in on screen! No need to call drawSelf()
+					if(r % 4 == 2){
+						if(c == 1 || c == cols-2)
+							grid[r][c] = new GlasswareBlock(xPos, yPos, block_width, block_height);
 					}
+					//For powerup blocks
+					if(r == 3 && c == 2){
+						grid[r][c] = new CatalystBlock(xPos, yPos, block_width, block_height);
+					}
+					if(r == 6 && c == 5){
+						grid[r][c] = new MSDSBlock(xPos, yPos, block_width, block_height);
+					}
+					
 					xPos += (spacing + block_width);
-					blockNum++;
 				}
 				xPos = spacing;
 				yPos += (spacing + block_height);
 			}
 		}
 		else if(level == 2){
+			rows = 12;
+			grid = new Block[rows][cols];
 			
+			double xPos = spacing;
+			double yPos = spacing;
+			for(int r = 0; r < rows; r++){
+				for(int c = 0; c < cols; c++){
+					if(r % 2 == 1 || c % 2 == 1){
+						grid[r][c] = new GlasswareBlock(xPos, yPos, block_width, block_height);
+					}
+					//Powerup blocks
+					if(r == 5 && c == 2){
+						grid[5][2] = new HClBlock(xPos, yPos, block_width, block_height);
+					}
+					if(r == 1 && c == 1){
+						grid[1][1] = new CatalystBlock(xPos, yPos, block_width, block_height);
+					}
+					if(r == 1 && c == 11){
+						grid[1][11] = new HClBlock(xPos, yPos, block_width, block_height);
+					}
+					xPos += (spacing + block_width);
+				}
+				xPos = spacing;
+				yPos += (spacing + block_height);
+			}
 		}
-		else{
+		else if(level == 3){
+			rows = 20;
+			grid = new Block[rows][cols];
+			
 			//Make HCl blocks every 10th possible block space
 			int blockNum = 1;
 			double xPos = spacing;

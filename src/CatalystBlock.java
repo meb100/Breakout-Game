@@ -31,8 +31,8 @@ public class CatalystBlock extends PowerupBlock{
 		group.getChildren().remove(getJavaFXShape());
 		grid.setBlock(null, r, c);
 		//Quadruple both x and y velocity components of Ball
-		ball.setXVel(Ball.INITIAL_XVEL * 4);
-		ball.setYVel(Ball.INITIAL_YVEL * 4);
+		ball.setXVel((int)(Ball.INITIAL_XVEL * 2.75));
+		ball.setYVel((int)(Ball.INITIAL_YVEL * 2.75));
 	}
 	
 }
