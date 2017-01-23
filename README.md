@@ -1,18 +1,18 @@
-#Readme - Breakout: Laboratory Edition
+# Readme - Breakout: Laboratory Edition
 
-##Author
+## Author
 Matthew Barbano
 
-##Dates
+## Dates
 Started: 1/14/17
 Finished: 1/22/17
 Hours Spent (estimate): 35
 
-##Roles
+## Roles
 N/A - Individual Project
 
-##Sources
-###Online
+## Sources
+### Online
 - StackOverflow
 - JavaFX 8 Documentation
 - Java 8 Documentation
@@ -24,23 +24,25 @@ N/A - Individual Project
 - https://www.tutorialspoint.com/java/java_documentation.htm
 - http://stackoverflow.com/questions/541920/multiple-line-code-example-in-javadoc-comment
 - https://bugs.eclipse.org/bugs/show_bug.cgi?id=425554
+- https://daringfireball.net/projects/markdown/basics
+- https://en.support.wordpress.com/markdown-quick-reference/
 
-###Human
+### Human
 - Dr. Duvall (Professor)
 - Robert Steilberg (UTA)
 - Nathaniel Brooke (Student)
 - Jimmy Shackford (Student)
 - Jake Conroy (Student)
 
-##Startup File
+## Startup File
 This is the file with main that you should run to play the game.
 Driver.java
 
-##Files for Testing
+## Files for Testing
 N/A, since is a game. Extensive testing conducted by playing game
 by running Driver.java.
 
-##Data/Resource Files
+## Data/Resource Files
 The following are images needed for the game:
 - burn.jpg
 - catalyst.jpg
@@ -52,31 +54,31 @@ The following are images needed for the game:
 - rules.jpg
 - StirBar.jpg
 
-##Other Information for Running Project
-###Normal Gameplay Keyboard Input:
+## Other Information for Running Project
+### Normal Gameplay Keyboard Input:
 Space Bar: Proceed to level 1 (on splash screen)
 Left/Right Arrows: Move hot plate (in a level)
 
-###Cheat Keys:
+### Cheat Keys:
 B = Restore all 5 chemical burns
 C = Clear all blocks from current level
 1, 2, 3 = Jump to that level
 
-###Game Loop:
+### Game Loop:
 The game begins with a splash screen. Pressing the space bar takes you to
 level 1. Beating each level takes you to the next one. If you lose all 5 lives
 (chemical burns) in a level, you get a game over and return to the splash
 screen. If you beat all 3 levels, you return to the splash screen.
 
-##Knows Bugs
+## Known Bugs
 The algorithm for detecting which side of a block/the hot plate the stir bar
 hits (bounceOff() in Ball.java) could be improved. Now, it sometimes cannot 
 distinguish between sides if the stir bar hits near a corner. However, it works
 well in the majority of cases.
 
-##Extra Features
+## Extra Features
 Coming soon
 
-##Impressions of Assignment
+## Impressions of Assignment
 Overall, I enjoyed this assignment. I feel significantly more comfortable with
 JavaFX and Git, as well as with refactoring increasingly larger projects.
