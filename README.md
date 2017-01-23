@@ -75,7 +75,7 @@ screen. If you beat all 3 levels, you return to the splash screen.
 - I did some significant restructuring to the GameObject inheritence hierarchy
 near the end of the project. I have tested the result and it appears to work
 correctly, but if any major bugs are found, please run the version of my project
-from the commit
+from the commit with comment "Changed Images."
 - The algorithm for detecting which side of a block/the hot plate the stir bar
 hits (bounceOff() in Ball.java) could be improved. Now, it sometimes cannot 
 distinguish between sides if the stir bar hits near a corner. However, it works
