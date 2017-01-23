@@ -1,125 +1,102 @@
-public class BlockGrid {
-	private Block[][] grid;
-	private double spacing;
-	private double blockWidth;
-	private double blockHeight;
-	private int rows;
-	private int cols;
-	
-	public BlockGrid(int level, int screen_width, int screen_height, double b_w, double b_h, double sp){
-	    spacing = sp;
-	    blockWidth = b_w;
-	    blockHeight = b_h;
-	    
-	    cols = (int)(screen_width / (spacing + blockWidth));
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
+public class BlockGrid {
+	public static final double BLOCK_SPACING = 5.0;
+	public static final double BLOCK_WIDTH = 50.0;
+	public static final double BLOCK_HEIGHT = 15.0;
+	public static final int TOTAL_COLS = (int)(Driver.SCREEN_BASE / (BLOCK_SPACING + BLOCK_WIDTH));
+	public static final String POWERUP_LOCATIONS_FILENAME = "PowerupLocations.txt";
+	
+	private int totalRows;
+	private Block[][] grid;
+	
+	public BlockGrid(int level){
+		totalRows = 4*level + 4;
+		grid = new Block[totalRows][TOTAL_COLS];
 		
-		if(level == 1){
-			rows = 8;
-			grid = new Block[rows][cols];
-			
-			double xPos = spacing;
-			double yPos = spacing;
-			for(int r = 0; r < rows; r++){
-				for(int c = 0; c < cols; c++){
-					if(r % 4 == 1 || r % 4 == 3){
-						if(c != 0 && c!= cols-1)
-							grid[r][c] = new GlasswareBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					if(r % 4 == 2){
-						if(c == 1 || c == cols-2)
-							grid[r][c] = new GlasswareBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					//For powerup blocks
-					if(r == 3 && c == 2){
-						grid[r][c] = new CatalystBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					if(r == 6 && c == 5){
-						grid[r][c] = new MSDSBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					
-					xPos += (spacing + blockWidth);
-				}
-				xPos = spacing;
-				yPos += (spacing + blockHeight);
-			}
-		}
-		else if(level == 2){
-			rows = 12;
-			grid = new Block[rows][cols];
-			
-			double xPos = spacing;
-			double yPos = spacing;
-			for(int r = 0; r < rows; r++){
-				for(int c = 0; c < cols; c++){
-					if(r % 2 == 1 || c % 2 == 1){
-						grid[r][c] = new GlasswareBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					//Powerup blocks
-					if(r == 5 && c == 2){
-						grid[5][2] = new HClBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					if(r == 1 && c == 1){
-						grid[1][1] = new CatalystBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					if(r == 1 && c == 11){
-						grid[1][11] = new HClBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					xPos += (spacing + blockWidth);
-				}
-				xPos = spacing;
-				yPos += (spacing + blockHeight);
-			}
-		}
-		else if(level == 3){
-			rows = 20;
-			grid = new Block[rows][cols];
-			
-			//Make HCl blocks every 10th possible block space
-			int blockNum = 1;
-			double xPos = spacing;
-			double yPos = spacing;
-			for(int r = 0; r < rows; r++){
-				for(int c = 0; c < cols; c++){
-					if(blockNum % 10 == 0){
-						grid[r][c] = new HClBlock(xPos, yPos, blockWidth, blockHeight);
-					}
-					else if(blockNum % 2 == 0){
-						grid[r][c] = new GlasswareBlock(xPos, yPos, blockWidth, blockHeight); //note the constructor of GlasswareBlock already draws in on screen! No need to call drawSelf()
-					}
-					xPos += (spacing + blockWidth);
-					blockNum++;
-				}
-				xPos = spacing;
-				yPos += (spacing + blockHeight);
-			}
-		}
+		generateGrid(level);
 	}
+	
 	public int getRows(){
-		return rows;
+		return totalRows;
 	}
 	public int getCols(){
-		return cols;
+		return TOTAL_COLS;
 	}
-	//yes, r and c are ALWAYS 0-indexed
+	
 	public Block getBlock(int r, int c){
 		return grid[r][c];
 	}
-	public void setBlock(Block b, int r, int c){ //can use to set an entry to null (test out)
-		grid[r][c] = b;
-		//Place it appropriately on screen (likely not drawn in correct location in grid at start)
-		if(b != null){
-		b.setX(((r + 1) * (spacing + blockWidth)) + spacing);
-		b.setY(((c + 1) * (spacing + blockWidth)) + spacing);
+	public void setBlock(Block blockToSet, int r, int c){
+		grid[r][c] = blockToSet;
+		
+		//Since this method can be used to set a block to null, this condition must be checked here
+		if(blockToSet != null){
+			blockToSet.setX(((r + 1) * (BLOCK_SPACING + BLOCK_WIDTH)) + BLOCK_SPACING);
+			blockToSet.setY(((c + 1) * (BLOCK_SPACING + BLOCK_WIDTH)) + BLOCK_SPACING);
 		}
 	}
-	/*//No need - setBlock() takes an already-drawn Block, and places it appropriately
-	public void drawSelf(){  //draws block grid from current contents of "grid" matrix, call when update 
-		
+	
+	private void generateGrid(int level){
+		int blockPositionNum = 1;
+		double xPos = BLOCK_SPACING;
+		double yPos = BLOCK_SPACING;
+		for(int r = 0; r < totalRows; r++){
+			for(int c = 0; c < TOTAL_COLS; c++){
+				if(level == 1){
+					generateLevel1Block(xPos, yPos, r, c, blockPositionNum);
+				}
+				else if(level == 2){
+					generateLevel2Block(xPos, yPos, r, c, blockPositionNum);
+				}
+				else if(level == 3){
+					generateLevel3Block(xPos, yPos, r, c, blockPositionNum);
+				}
+				blockPositionNum++;
+				xPos += (BLOCK_SPACING + BLOCK_WIDTH);
+			}
+			xPos = BLOCK_SPACING;
+			yPos += (BLOCK_SPACING + BLOCK_HEIGHT);
+		}
 	}
-	*/
-	//Should know how to:
-	//Draw self (complex) - do in terms of WIDTH and HEIGHT
-	//Get a specific block
-	//Modify a specific block
+	
+	private void generateLevel1Block(double xPos, double yPos, int r, int c, int blockPositionNum){
+		if((r % 4 == 1 || r % 4 == 3) && (c != 0 && c!= TOTAL_COLS-1)){
+				grid[r][c] = new GlasswareBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+		if((r % 4 == 2) && (c == 1 || c == TOTAL_COLS-2)){
+				grid[r][c] = new GlasswareBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+		if(blockPositionNum % 20 == 0){
+			grid[r][c] = new CatalystBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+	}
+	
+	private void generateLevel2Block(double xPos, double yPos, int r, int c, int blockPositionNum){
+		if(r % 2 == 1 || c % 2 == 1){
+			grid[r][c] = new GlasswareBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+		if(blockPositionNum % 15 == 0){
+			grid[r][c] = new MSDSBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+		if(blockPositionNum % 10 == 0){
+			grid[r][c] = new HClBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+	}
+	
+	private void generateLevel3Block(double xPos, double yPos, int r, int c, int blockPositionNum){
+		if(blockPositionNum % 2 == 0){
+			grid[r][c] = new GlasswareBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT); //note the constructor of GlasswareBlock already draws in on screen! No need to call drawSelf()
+		}		
+		if(blockPositionNum % 10 == 0){
+			grid[r][c] = new HClBlock(xPos, yPos, BLOCK_WIDTH, BLOCK_HEIGHT);
+		}
+	}
 }

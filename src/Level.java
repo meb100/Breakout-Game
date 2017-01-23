@@ -52,7 +52,7 @@ public class Level implements Screen{
 		//Note constructor automatically instantiates ImageView/Rectangle/Circle/etc JavaFX Shapes
 		ball = new Ball();
 		//block = new GlasswareBlock(50.0, 50.0);
-		blockGrid = new BlockGrid(levelNum, SCREEN_BASE, SCREEN_HEIGHT, 50.0, 15.0, 5.0);
+		blockGrid = new BlockGrid(levelNum);
 		paddle = new Paddle(200.0, 525.0, 5);
 		scorebar = new Scorebar(levelNum);
 		//Group ordering
