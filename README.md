@@ -82,7 +82,8 @@ distinguish between sides if the stir bar hits near a corner. However, it works
 well in the majority of cases.
 
 ## Extra Features
-Coming soon
+Easter egg on splash screen: Press R, Y, or B to change the background color
+to Red, Yellow, or Blue, respectively.
 
 ## Impressions of Assignment
 Overall, I enjoyed this assignment. I feel significantly more comfortable with
