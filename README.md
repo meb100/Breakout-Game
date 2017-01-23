@@ -4,9 +4,9 @@
 Matthew Barbano
 
 ## Dates
-Started: 1/14/17
-Finished: 1/22/17
-Hours Spent (estimate): 35
+- Started: 1/14/17
+- Finished: 1/22/17
+- Hours Spent (estimate): 35
 
 ## Roles
 N/A - Individual Project
@@ -35,8 +35,8 @@ N/A - Individual Project
 - Jake Conroy (Student)
 
 ## Startup File
-This is the file with main that you should run to play the game.
-Driver.java
+Run Driver.java to play the game.
+
 
 ## Files for Testing
 N/A, since is a game. Extensive testing conducted by playing game
@@ -56,13 +56,13 @@ The following are images needed for the game:
 
 ## Other Information for Running Project
 ### Normal Gameplay Keyboard Input:
-Space Bar: Proceed to level 1 (on splash screen)
-Left/Right Arrows: Move hot plate (in a level)
+- Space Bar: Proceed to level 1 (on splash screen)
+- Left/Right Arrows: Move hot plate (in a level)
 
 ### Cheat Keys:
-B = Restore all 5 chemical burns
-C = Clear all blocks from current level
-1, 2, 3 = Jump to that level
+- B = Restore all 5 chemical burns
+- C = Clear all blocks from current level
+- 1, 2, 3 = Jump to that level
 
 ### Game Loop:
 The game begins with a splash screen. Pressing the space bar takes you to
