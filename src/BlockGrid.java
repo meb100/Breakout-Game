@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * This class stores all of the Block objects in a matrix (2D array). It also assists in correctly
+ * determining the location of each block on the screen.
+ * @author Matthew Barbano
+ *
+ */
+
 public class BlockGrid {
 	public static final double BLOCK_SPACING = 5.0;
 
@@ -33,6 +40,13 @@ public class BlockGrid {
 	public Block getBlock(int r, int c){
 		return grid[r][c];
 	}
+	/**
+	 * Sets the block in the grid at (r, c) to blockToSet, which can be null.
+	 * Also sets the x and y coordinates of blockToSet on the screen.
+	 * @param blockToSet
+	 * @param r
+	 * @param c
+	 */
 	public void setBlock(Block blockToSet, int r, int c){
 		grid[r][c] = blockToSet;
 		
@@ -42,7 +56,12 @@ public class BlockGrid {
 			blockToSet.setY(((c + 1) * (BLOCK_SPACING + Block.BLOCK_HEIGHT)) + BLOCK_SPACING);
 		}
 	}
-	
+	/**
+	 * Called by BlockGrid's constructor, this method algorithmically draws each level's grid on
+	 * the screen. It also algorithmically draws certain blocks as PowerupBlocks. It calls 3 helper
+	 * methods to accomplish this.
+	 * @param level
+	 */
 	private void generateGrid(int level){
 		int blockPositionNum = 1;
 		double xPos = BLOCK_SPACING;

@@ -16,7 +16,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+/**
+ * This class implements the startup splash screen.
+ * @author Matthew Barbano
+ *
+ */
 public class Startup implements Screen{
 	private static final Color BACKGROUND_COLOR = Color.CORNFLOWERBLUE;
 	private static final String LOGO_FILENAME = "logo.jpg";

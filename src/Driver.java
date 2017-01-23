@@ -15,6 +15,11 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The Driver class is the class containing main() that runs the project. 
+ * @author Matthew Barbano
+ */
+
 public class Driver extends Application {
 	public static final int SCREEN_BASE = 400;
 	public static final int SCREEN_HEIGHT = 600;
@@ -26,6 +31,10 @@ public class Driver extends Application {
 	public static void main(String[] args){
 		launch(args);
 	}
+	/**
+	 * Overwrites JavaFX start(stage) method. Instantiates the screens array and
+	 * sets up Scene and Timeline.
+	 */
 	public void start(Stage stage) throws Exception {
 		screens[0] = new Startup();
 		for(int level = 1; level <= NUM_LEVELS; level++){
@@ -45,6 +54,11 @@ public class Driver extends Application {
 		t.getKeyFrames().add(f);
 		t.play();
 	}
+	/**
+	 * Run on each frame of the Timeline. Makes decision of which scene to show
+	 * based on the status variable in the Screen class.
+	 * @param stage
+	 */
 	private void step(Stage stage){
 		if(screens[currentScreenNumber].getStatus() == Screen.NEEDS_SETUP){
 			stage.setScene(screens[currentScreenNumber].initialize());

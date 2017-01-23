@@ -12,7 +12,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+/**
+ * Class for GameObject Ball.
+ * @author Matthew Barbano
+ *
+ */
 public class Ball extends GameObject {
 	public static final double INITIAL_X = 200.0;
 	public static final double INITIAL_Y = 450.0;

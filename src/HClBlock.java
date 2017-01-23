@@ -14,7 +14,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+/**
+ * Concrete class for HClBlocks. All surrounding blocks destroyed when hit.
+ * @author Matthew Barbano
+ *
+ */
 public class HClBlock extends PowerupBlock{
 	public static final String IMAGE_FILENAME = "hcl.jpg";
 

@@ -2,6 +2,11 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Concrete class for MSDSBlock. Extends size of paddle when hit.
+ * @author Matthew Barbano
+ *
+ */
 public class MSDSBlock extends PowerupBlock{
 	public static final String IMAGE_FILENAME = "msds.jpg";
 	

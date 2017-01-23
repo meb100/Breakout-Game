@@ -13,6 +13,11 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Class for GlasswareBlocks (regular blocks).
+ * @author Matthew Barbano
+ *
+ */
 public class GlasswareBlock extends Block{
 	public static final String IMAGE_FILENAME = "glassware.jpg";
 	

@@ -14,6 +14,11 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * This class implements each level screen, as specified by the levelNum variable.
+ * @author Matthew Barbano
+ *
+ */
 public class Level implements Screen{
 	private int levelNum;
 	private final Paint BACKGROUND_COLOR = Color.GREY;

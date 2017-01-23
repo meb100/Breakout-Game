@@ -13,6 +13,13 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The GameObject class is the root of the hierarchy for objects that appear in each scene.
+ * Instances of its subclasses object know how to take actions such as drawing themselves,
+ * adjusting their velocities, and detecting collisions with other GameObjects.
+ * @author Matthew Barbano
+ */
+
 public abstract class GameObject {
 	private ImageView imageView;
 	

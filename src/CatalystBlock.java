@@ -13,6 +13,11 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Concrete class for Catalyst Blocks. Increases ball's speed when hit.
+ * @author Matthew Barbano
+ *
+ */
 public class CatalystBlock extends PowerupBlock{
 	public static final String IMAGE_FILENAME = "catalyst.jpg";
 	

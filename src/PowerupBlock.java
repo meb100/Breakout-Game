@@ -13,6 +13,12 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Abstract class for PowerupBlocks
+ * @author Matthew Barbano
+ *
+ */
+
 public abstract class PowerupBlock extends Block{
 	public PowerupBlock(double initialX, double initialY, String imageFilename){
 		super(initialX, initialY, imageFilename);

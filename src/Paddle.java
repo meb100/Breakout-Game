@@ -13,6 +13,12 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Class for GameObject Paddle.
+ * @author Matthew
+ *
+ */
+
 public class Paddle extends GameObject{
 	public static final double INITIAL_X = 200.0;
 	public static final double INITIAL_Y = 525.0;
