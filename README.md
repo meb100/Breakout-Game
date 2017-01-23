@@ -6,7 +6,7 @@ Matthew Barbano
 ## Dates
 - Started: 1/14/17
 - Finished: 1/22/17
-- Hours Spent (estimate): 35
+- Hours Spent (estimate): 40
 
 ## Roles
 N/A - Individual Project
@@ -26,6 +26,7 @@ N/A - Individual Project
 - https://bugs.eclipse.org/bugs/show_bug.cgi?id=425554
 - https://daringfireball.net/projects/markdown/basics
 - https://en.support.wordpress.com/markdown-quick-reference/
+- http://stackoverflow.com/questions/14165066/private-fields-from-abstract-class-cannot-be-accessed-in-the-subclass
 
 ### Human
 - Dr. Duvall (Professor)
@@ -71,13 +72,18 @@ level 1. Beating each level takes you to the next one. If you lose all 5 lives
 screen. If you beat all 3 levels, you return to the splash screen.
 
 ## Known Bugs
-The algorithm for detecting which side of a block/the hot plate the stir bar
+- I did some significant restructuring to the GameObject inheritence hierarchy
+near the end of the project. I have tested the result and it appears to work
+correctly, but if any major bugs are found, please run the version of my project
+from the commit with comment "Changed Images."
+- The algorithm for detecting which side of a block/the hot plate the stir bar
 hits (bounceOff() in Ball.java) could be improved. Now, it sometimes cannot 
 distinguish between sides if the stir bar hits near a corner. However, it works
 well in the majority of cases.
 
 ## Extra Features
-Coming soon
+Easter egg on splash screen: Press R, Y, or B to change the background color
+to Red, Yellow, or Blue, respectively.
 
 ## Impressions of Assignment
 Overall, I enjoyed this assignment. I feel significantly more comfortable with
