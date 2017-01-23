@@ -18,15 +18,11 @@ N/A - Individual Project
 - Java 8 Documentation
 - ExampleBounce.java from CS 308
 - https://coderanch.com/t/580998/java/remove-node
-- https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-
-8#q=java%20can%20abstract%20class%20have%20constructor
-- http://stackoverflow.com/questions/22014950/javafx-moving-image-with-
-arrow-keys-and-spacebar
-- http://stackoverflow.com/questions/23394547/how-do-i-remove-a-scene-in-
-a-stage-in-javafx
+- https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=java%20can%20abstract%20class%20have%20constructor
+- http://stackoverflow.com/questions/22014950/javafx-moving-image-with-arrow-keys-and-spacebar
+- http://stackoverflow.com/questions/23394547/how-do-i-remove-a-scene-in-a-stage-in-javafx
 - https://www.tutorialspoint.com/java/java_documentation.htm
-- http://stackoverflow.com/questions/541920/multiple-line-code-example-in-
-javadoc-comment
+- http://stackoverflow.com/questions/541920/multiple-line-code-example-in-javadoc-comment
 - https://bugs.eclipse.org/bugs/show_bug.cgi?id=425554
 
 ###Human
@@ -67,8 +63,8 @@ C = Clear all blocks from current level
 1, 2, 3 = Jump to that level
 
 ###Game Loop:
-The game begins with a splash screen. Pressing the space bar takes you to level
-1. Beating each level takes you to the next one. If you lose all 5 lives
+The game begins with a splash screen. Pressing the space bar takes you to
+level 1. Beating each level takes you to the next one. If you lose all 5 lives
 (chemical burns) in a level, you get a game over and return to the splash
 screen. If you beat all 3 levels, you return to the splash screen.
 
