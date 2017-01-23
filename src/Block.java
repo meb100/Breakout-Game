@@ -13,6 +13,16 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public interface Block extends GameObject{
-	public void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c);
+public abstract class Block extends GameObject{
+	public static final int BLOCK_WIDTH = 50;
+	public static final int BLOCK_HEIGHT = 15;
+	
+	public Block(double initialX, double initialY, String imageFilename){
+		super(initialX, initialY, BLOCK_WIDTH, BLOCK_HEIGHT, imageFilename);
+	}
+	public abstract void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c);
+	public void makeBlockDisappear(Group group, BlockGrid grid, int r, int c){
+		group.getChildren().remove(getJavaFXShape());
+		grid.setBlock(null, r, c);
+	}
 }

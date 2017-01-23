@@ -20,14 +20,12 @@ public class Level implements Screen{
 	private final int SCREEN_BASE;
 	private final int SCREEN_HEIGHT;
 	public final int FRAME_DELAY_MILLISECONDS;
-	public Group objectCollection;
+	private Group objectCollection;
 	
-	public Ball ball;
-	//public GlasswareBlock block;
-	public BlockGrid blockGrid;
-	public Paddle paddle;
-	public Scorebar scorebar;
-	//Add more GameObjects here!
+	private Ball ball;
+	private BlockGrid blockGrid;
+	private Paddle paddle;
+	private Scorebar scorebar;
 	
 	private int status;
 	
@@ -48,16 +46,12 @@ public class Level implements Screen{
 		objectCollection = new Group();
 		Scene scene = new Scene(objectCollection, SCREEN_BASE, SCREEN_HEIGHT, BACKGROUND_COLOR); 
 		
-		//Instantiate GameObjects (yes, even the ball and paddle are different instances in between levels)
-		//Note constructor automatically instantiates ImageView/Rectangle/Circle/etc JavaFX Shapes
 		ball = new Ball();
-		//block = new GlasswareBlock(50.0, 50.0);
 		blockGrid = new BlockGrid(levelNum);
-		paddle = new Paddle(200.0, 525.0, 5);
+		paddle = new Paddle();
 		scorebar = new Scorebar(levelNum);
-		//Group ordering
+		
 		objectCollection.getChildren().add(ball.getJavaFXShape());
-		//objectCollection.getChildren().add(block.getJavaFXShape());
 		objectCollection.getChildren().add(paddle.getJavaFXShape());
 		for(int r = 0; r < blockGrid.getRows(); r++){
 			for(int c = 0; c < blockGrid.getCols(); c++){
@@ -67,30 +61,24 @@ public class Level implements Screen{
 		}
 		objectCollection.getChildren().add(scorebar.getJavaFXShape());
 		
-        //Change status
         status = Screen.RUNNING;
-		
-		//Keyboard feature setup (cheat codes, paddle movement)
         scene.setOnKeyPressed(e -> keyboardInput(e.getCode()));
         
-		//Return
 		return scene;
 	}
 	public void step(){
-		final double FRAME_DELAY_SECONDS = FRAME_DELAY_MILLISECONDS / 1000.0;
-		//Update positions of Ball and Paddle - Also takes care of ball-wall collisions, including bottom wall
-		ball.updateLocation(scorebar, FRAME_DELAY_SECONDS, SCREEN_BASE, SCREEN_HEIGHT);
-		//Take care of collisions
-		//Ball-Paddle
+		ball.updateLocation(scorebar);
+		
+		//Ball-Paddle Collision
 		if(gameObjectsIntersect(ball, paddle)){
 			ball.collisionWithPaddle(paddle);
 		}
-		//Ball-Block
+		
+		//Ball-Block Collision
 		for(int r = 0; r < blockGrid.getRows(); r++){
 			for(int c = 0; c < blockGrid.getCols(); c++){
-				//Short circuiting
 				if(blockGrid.getBlock(r, c) != null && gameObjectsIntersect(ball, blockGrid.getBlock(r, c))){
-					//Update Scorebar - make sure to do BEFORE remove blocks!
+					//Update scorebar - important to do before remove blocks
 					if(blockGrid.getBlock(r, c) instanceof GlasswareBlock){
 						scorebar.incrementScore(1);
 					}
@@ -103,13 +91,14 @@ public class Level implements Screen{
 				}
 			}
 		}
+		
 		//Update Scorebar
 		scorebar.drawScorebar();
-		//If game over, stop the animation and erase scene
+		
+		//Ending level
 		if(scorebar.getLivesLeft() <= 0){
 			status = Screen.LOST;
 		}
-		//If won level, stop the animation and erase scene
 		boolean allBlocksNull = true;
 		for(int r = 0; r < blockGrid.getRows(); r++){
 			for(int c = 0; c < blockGrid.getCols(); c++){
@@ -127,17 +116,27 @@ public class Level implements Screen{
 	}
 	private void keyboardInput(KeyCode code){
 		if(code == KeyCode.RIGHT){
-			paddle.moveRight(SCREEN_BASE);
+			paddle.moveRight(1);
 		}
 		else if(code == KeyCode.LEFT){
-			paddle.moveLeft();
+			paddle.moveLeft(1);
+		}
+		else if(code == KeyCode.D){
+			paddle.moveRight(2);
+		}
+		else if(code == KeyCode.A){
+			paddle.moveLeft(2);
+		}
+		else if(code == KeyCode.E){
+			paddle.moveRight(3);
+		}
+		else if(code == KeyCode.Q){
+			paddle.moveLeft(3);
 		}
 		//Cheat keys
-		//Restore all lives (burns)
 		else if(code == KeyCode.B){
 			scorebar.setLivesLeft(Scorebar.TOTAL_LIVES);
 		}
-		//Clear all blocks except for chemical blocks (to focus on lab equipment) - if no chemical blocks, jumps to next level
 		else if(code == KeyCode.C){
 			for(int r = 0; r < blockGrid.getRows(); r++){
 				for(int c = 0; c < blockGrid.getCols(); c++){
@@ -146,15 +145,12 @@ public class Level implements Screen{
 				}
 			}
 		}
-		//Jump to level 1
 		else if(code == KeyCode.DIGIT1){
 			status = Screen.JUMP_TO_LEVEL_1;
 		}
-		//Jump to level 2
 		else if(code == KeyCode.DIGIT2){
 			status = Screen.JUMP_TO_LEVEL_2;
 		}
-		//Jump to level 3
 		else if(code == KeyCode.DIGIT3){
 			status = Screen.JUMP_TO_LEVEL_3;
 		}

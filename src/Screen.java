@@ -17,7 +17,7 @@ public interface Screen {
 	public static final int NEEDS_SETUP = 0;
 	public static final int RUNNING = 1;
 	public static final int WON = 2;
-	public static final int LOST = 3;   //add status field to both subclass
+	public static final int LOST = 3;
 	public static final int JUMP_TO_LEVEL_1 = 4;
 	public static final int JUMP_TO_LEVEL_2 = 5;
 	public static final int JUMP_TO_LEVEL_3 = 6;

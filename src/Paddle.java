@@ -13,72 +13,36 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Paddle implements GameObject{
-	private int vel; //just x direction!
-	private ImageView imageView;
-	private final String imageFilename = "HotPlate.jpg"; //https://www.nist.gov/laboratories/tools-instruments/corning-pc-420-stirrer-hot-plate
+public class Paddle extends GameObject{
+	public static final double INITIAL_X = 200.0;
+	public static final double INITIAL_Y = 525.0;
+	public static final int INITIAL_VELOCITY = 5;
 	public static final int INITIAL_WIDTH = 70;
+	public static final int INITIAL_HEIGHT = 20;
+	public static final String IMAGE_FILENAME = "HotPlate.jpg";
 	
-	public Paddle(double initX, double initY, int initVel){
-		vel = initVel;
-		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
-		setWidth(INITIAL_WIDTH);
-		setHeight(20);
-		setX(initX);
-		setY(initY);
-	}
-	@Override
-	public ImageView getJavaFXShape(){
-		return imageView;
-	}
+	private int velocity;
 
-	public double getX(){
-		return imageView.getX();
-	}
-	public double getY(){
-		return imageView.getY();
-	}
-
-	public void setX(double newX){
-		imageView.setX(newX);
-	}
-	public void setY(double newY){
-		imageView.setY(newY);
-	}
-
-	public double getWidth() {
-		return imageView.getFitWidth();
-	}
-	@Override
-	public double getHeight() {
-		return imageView.getFitHeight();
-	}
-	@Override
-	public void setWidth(double newWidth) {
-		imageView.setFitWidth(newWidth);
-	}
-	@Override
-	public void setHeight(double newHeight) {
-		imageView.setFitHeight(newHeight);
+	public Paddle(){
+		super(INITIAL_X, INITIAL_Y, INITIAL_WIDTH, INITIAL_HEIGHT, IMAGE_FILENAME);
+		velocity = INITIAL_VELOCITY;
 	}
 	
-	//Velocity getters and selectors
 	public int getVelocity(){
-		return vel;
+		return velocity;
 	}
-	public void setVelocity(int v){
-		vel = v;
+	public void setVelocity(int newVelocity){
+		velocity = newVelocity;
 	}
 	
-	//Movement methods
-	public void moveRight(int screen_width){
-		if(getX() + getWidth() < screen_width){
-			setX(getX() + vel);
+	public void moveRight(int multiplier){
+		if(getX() + getWidth() < Driver.SCREEN_BASE){
+			setX(getX() + multiplier*velocity);
 		}
 	}
-	public void moveLeft(){
+	public void moveLeft(int multiplier){
 		if(getX() > 0){
-			setX(getX() - vel);
+			setX(getX() - multiplier*velocity);
 		}
 	}
 }

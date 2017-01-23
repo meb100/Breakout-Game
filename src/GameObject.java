@@ -13,15 +13,44 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public interface GameObject {
-	//dilemma: Glassware blocks aren't images, so what type should this return? Lowest common superclass between Image and Shape is Object...
-	public ImageView getJavaFXShape();
-	public double getX();
-	public double getY();
-	public void setX(double newX);
-	public void setY(double newY);
-	public double getWidth();
-	public double getHeight();
-	public void setWidth(double newWidth);
-	public void setHeight(double newHeight);
+public abstract class GameObject {
+	private ImageView imageView;
+	
+	public GameObject(double initialX, double initialY, int width, int height, String imageFilename){
+		setJavaFXShape(new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename))));
+		setX(initialX);
+		setY(initialY);
+		setWidth(width);
+		setHeight(height);
+	}
+	public ImageView getJavaFXShape(){
+		return imageView;
+	}
+	public void setJavaFXShape(ImageView newImageView){
+		imageView = newImageView;
+	}
+	public double getX(){
+		return imageView.getX();
+	}
+	public double getY(){
+		return imageView.getY();
+	}
+	public void setX(double newX){
+		imageView.setX(newX);
+	}
+	public void setY(double newY){
+		imageView.setY(newY);
+	}
+	public double getWidth() {
+		return imageView.getFitWidth();
+	}
+	public double getHeight() {
+ 		return imageView.getFitHeight();
+	}
+	public void setWidth(double newWidth) {
+		imageView.setFitWidth(newWidth);
+	}
+	public void setHeight(double newHeight) {
+		imageView.setFitHeight(newHeight);
+	}
 }

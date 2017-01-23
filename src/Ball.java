@@ -13,109 +13,65 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Ball implements GameObject {
+public class Ball extends GameObject {
 	public static final double INITIAL_X = 200.0;
 	public static final double INITIAL_Y = 450.0;
-	public static final int INITIAL_XVEL = 200;
-	public static final int INITIAL_YVEL = 100;
-	private int xVel;
-	private int yVel;
-	private final String imageFilename = "StirBar.jpg";
-	private ImageView imageView; //Just use imageView's x and y to keep track of position
+	public static final int INITIAL_X_VELOCITY = 200;
+	public static final int INITIAL_Y_VELOCITY = -100;
+	public static final int IMAGE_WIDTH = 25;
+	public static final int IMAGE_HEIGHT = 7;
+	public static final String IMAGE_FILENAME = "StirBar.jpg";
+	public static final double COLLISION_INTERIOR_THRESHOLD = 0.25;
+	
+	private int xVelocity;
+	private int yVelocity;
+	
 	public Ball(){
-		xVel = INITIAL_XVEL;
-		yVel = INITIAL_YVEL;
-		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
-		setWidth(25);
-		setHeight(7);
-		setX(INITIAL_X);
-		setY(INITIAL_Y);
-	}
-	//Accessors and modifiers
-	public double getX(){
-		return imageView.getX();
-	}
-	public double getY(){
-		return imageView.getY();
-	}
-	public int getXVel(){
-		return xVel;
-	}
-	public int getYVel(){
-		return yVel;
-	}
-	public void setX(double newX){
-		imageView.setX(newX);
-	}
-	public void setY(double newY){
-		imageView.setY(newY);
-	}
-	public void setXVel(int newXVel){
-		xVel = newXVel;
-	}
-	public void setYVel(int newYVel){
-		yVel = newYVel;
-	}
-	public ImageView getJavaFXShape(){
-		return imageView;
-	}
-	//For animation (implemented from GameObject)
-	//What does a Ball need to know how to do?
-	//Update position based on speed and time elapsed (as do Paddle, but not Bricks)
-	//Bounce off walls (ONLY Ball)
-	//How to handle collisions (design decision): Check if there is a collision in Level class, then if so, run
-	//appropriate collision method in classes of ALL affected GameObjects
-	//Collision with Paddle
-	//Collision with Block
-	//Collision with LabEquipment
-	public void updateLocation(Scorebar scorebar, double delay_sec, int width, int height){ //also deal with wall collisions here
-		//Update position
-		setX(getX() + xVel*delay_sec);
-		setY(getY() + yVel*delay_sec);
-		//Collisions with walls
-		//right wall
+		super(INITIAL_X, INITIAL_Y, IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_FILENAME);
 		
-        if(beyondRightWall(width)){
-        	xVel *= -1;
-        	/*
-        	System.out.println("Right");
-            System.out.println("x = " + getX() + " y = " + getY());
-            */
+		xVelocity = INITIAL_X_VELOCITY;
+		yVelocity = INITIAL_Y_VELOCITY;
+	}
+	
+
+	public int getXVelocity(){
+		return xVelocity;
+	}
+	public int getYVelocity(){
+		return yVelocity;
+	}
+	public void setXVelocity(int newXVel){
+		xVelocity = newXVel;
+	}
+	public void setYVelocity(int newYVel){
+		yVelocity = newYVel;
+	}
+
+	
+	public void updateLocation(Scorebar scorebar){
+		incrementCoordinates();
+		checkWallCollisions(scorebar);
+	}
+	private void incrementCoordinates(){
+		setX(getX() + xVelocity*Driver.FRAME_DELAY_MILLISECONDS/1000);
+		setY(getY() + yVelocity*Driver.FRAME_DELAY_MILLISECONDS/1000);
+	}
+	private void checkWallCollisions(Scorebar scorebar){
+        if(beyondRightWall()){
+        	xVelocity *= -1;
         }
-        //left wall
         if(beyondLeftWall()){
-        	xVel *= -1;
-        	/*
-        	System.out.println("Left");
-            System.out.println("x = " + getX() + " y = " + getY());
-            */
+        	xVelocity *= -1;
         }
-        //top wall
         if(beyondTopWall()){
-        	yVel *= -1;
-        	/*
-        	System.out.println("Top");
-            System.out.println("x = " + getX() + " y = " + getY());
-            */
+        	yVelocity *= -1;
         }
-        //bottom wall
-        if(beyondBottomWall(height)){
-        	yVel *= -1;
-        	/*
-        	System.out.println("Bottom");
-            System.out.println("x = " + getX() + " y = " + getY());
-            */
-        	//Reset ball location/velocity
-        	setX(INITIAL_X);
-        	setY(INITIAL_Y);
-        	setXVel(INITIAL_XVEL);
-        	setYVel(INITIAL_YVEL);
-        	//Decrement lives
-        	scorebar.decrementLivesLeft();
+        if(beyondBottomWall()){
+        	resetAfterBottomWall(scorebar);
         }
 	}
-	private boolean beyondRightWall(int width){
-		return getX() + getWidth() >= width;
+	private boolean beyondRightWall(){
+		return getX() + getWidth() >= Driver.SCREEN_BASE;
 	}
 	private boolean beyondLeftWall(){
 		return getX() <= 0;
@@ -123,10 +79,19 @@ public class Ball implements GameObject {
 	private boolean beyondTopWall(){
 		return getY() <= 0;
 	}
-	private boolean beyondBottomWall(int height){
-		return getY() + getHeight() >= height;
+	private boolean beyondBottomWall(){
+		return getY() + getHeight() >= Driver.SCREEN_HEIGHT;
 	}
-	public void collisionWithPaddle(Paddle paddle){  //Perhaps come back at end to deal with edge cases of hitting paddle from sides other than top
+	private void resetAfterBottomWall(Scorebar scorebar){
+    	setX(INITIAL_X);
+    	setY(INITIAL_Y);
+    	setXVelocity(INITIAL_X_VELOCITY);
+    	setYVelocity(INITIAL_Y_VELOCITY);
+    	
+    	scorebar.decrementLivesLeft();
+	}
+
+	public void collisionWithPaddle(Paddle paddle){
 		bounceOff(paddle);
 	}
 	public void collisionWithBlock(Block block){
@@ -135,46 +100,55 @@ public class Ball implements GameObject {
 	private void bounceOff(GameObject otherShape){
 		String sideHit = whichSideHit(otherShape);
 		if(sideHit.equals("Left")){
-			xVel = - Math.abs(xVel);
+			xVelocity = - Math.abs(xVelocity);
 		}
 		else if(sideHit.equals("Right")){
-			xVel = Math.abs(xVel);
+			xVelocity = Math.abs(xVelocity);
 		}
 		else if(sideHit.equals("Top")){
-			yVel = - Math.abs(yVel);
+			yVelocity = - Math.abs(yVelocity);
 		}
 		else{
-			yVel = Math.abs(yVel);
+			yVelocity = Math.abs(yVelocity);
 		}
 	}
-	private String whichSideHit(GameObject otherShape){  //returns "Top", "Bottom", "Left","Right", assumes width and height of otherShape are larger than those of this, and than an intersection has occurred
-		String sideHit = ""; //Top and Bottom take precedence over Left and Right
+	/**
+	 * During a ball-paddle or ball-block collision, determines which 
+	 * side of the paddle/block the ball hit. Uses criteria of whether ball
+	 * hit within vertical or horizontal range of rectangle edges, then distinguishes
+	 * between top/bottom and left/right with COLLISION_INTERIOR_THRESHOLD. Assumes otherShape's
+	 * dimensions (width, height, and area) are larger than this's dimensions, and that this and
+	 * otherShape intersect. In general, "Top" and "Bottom" take precedence over
+	 * "Left" and "Right".
+	 * @param otherShape The paddle/block intersecting with this
+	 * @return "Top", "Bottom", "Left", or "Right" indicating where the collision occurred.
+	 */
+	private String whichSideHit(GameObject otherShape){  
+		String sideHit = ""; 
 		
-		if(getTopY(otherShape) <= getTopY(this)
-				&& getBottomY(otherShape) >= getBottomY(this)
-				&& getLeftX(otherShape) + otherShape.getWidth() / 4 >= getRightX(this)){
-			System.out.println("Left");
+		if(withinRectangleHorizontally(otherShape)
+				&& getLeftX(otherShape) + otherShape.getWidth() * COLLISION_INTERIOR_THRESHOLD >= getRightX(this)){
 			sideHit = "Left";
 		}
-		if(getTopY(otherShape) <= getTopY(this)
-				&& getBottomY(otherShape) >= getBottomY(this)
-				&& getRightX(otherShape) - otherShape.getWidth() / 4 <= getLeftX(this)){
-			System.out.println("Right");
+		if(withinRectangleHorizontally(otherShape)
+				&& getRightX(otherShape) - otherShape.getWidth() * COLLISION_INTERIOR_THRESHOLD <= getLeftX(this)){
 			sideHit = "Right";
 		}
-		if(getLeftX(otherShape) <= getLeftX(this) 
-				&& getRightX(otherShape) >= getRightX(this)
-				&& getBottomY(otherShape) - otherShape.getHeight() / 4 <= getTopY(this)){
-			System.out.println("Bottom");
+		if(withinRectangleVertically(otherShape)
+				&& getBottomY(otherShape) - otherShape.getHeight() * COLLISION_INTERIOR_THRESHOLD <= getTopY(this)){
 			sideHit = "Bottom";
 		}
-		if(getLeftX(otherShape) <= getLeftX(this)
-				&& getRightX(otherShape) >= getRightX(this)
-				&& getTopY(otherShape) + otherShape.getHeight() / 4 >= getBottomY(this)){
-			System.out.println("Top");
+		if(withinRectangleVertically(otherShape)
+				&& getTopY(otherShape) + otherShape.getHeight() * COLLISION_INTERIOR_THRESHOLD >= getBottomY(this)){
 			sideHit = "Top";
 		}
 		return sideHit;
+	}
+	private boolean withinRectangleHorizontally(GameObject otherShape){
+		return getTopY(otherShape) <= getTopY(this) && getBottomY(otherShape) >= getBottomY(this);
+	}
+	private boolean withinRectangleVertically(GameObject otherShape){
+		return getLeftX(otherShape) <= getLeftX(this) && getRightX(otherShape) >= getRightX(this);
 	}
 	private double getLeftX(GameObject shape){
 		return shape.getX();
@@ -187,25 +161,5 @@ public class Ball implements GameObject {
 	}
 	private double getBottomY(GameObject shape){
 		return shape.getY() + shape.getHeight();
-	}
-	public void collisionWithLabEquipment(){
-		return;
-	}
-	//make sure get/set fitWidth is OK, rather than method in ExampleBounce.java
-	@Override
-	public double getWidth() {
-		return imageView.getFitWidth();
-	}
-	@Override
-	public double getHeight() {
- 		return imageView.getFitHeight();
-	}
-	@Override
-	public void setWidth(double newWidth) {
-		imageView.setFitWidth(newWidth);
-	}
-	@Override
-	public void setHeight(double newHeight) {
-		imageView.setFitHeight(newHeight);
 	}
 }

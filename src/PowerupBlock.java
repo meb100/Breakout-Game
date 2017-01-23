@@ -13,46 +13,8 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public abstract class PowerupBlock implements Block{ //and since Block interface extends GameObject interface, must implement GameObject methods too!
-	public ImageView imageView;
-	
-	//No constructor - see subclasses
-
-	//Rest from GameObject interface - consider implementing these all in GameObject interface and make it a class!
-	@Override
-	public ImageView getJavaFXShape() {
-		return imageView;
-	}
-
-	@Override
-	public double getX(){
-		return imageView.getX();
-	}
-	public double getY(){
-		return imageView.getY();
-	}
-
-	public void setX(double newX){
-		imageView.setX(newX);
-	}
-	public void setY(double newY){
-		imageView.setY(newY);
-	}
-	@Override
-	public double getWidth() {
-		return imageView.getFitWidth();
-	}
-	@Override
-	public double getHeight() {
-		return imageView.getFitHeight();
-	}
-	@Override
-	public void setWidth(double newWidth) {
-		imageView.setFitWidth(newWidth);
-	}
-	@Override
-	public void setHeight(double newHeight) {
-		imageView.setFitHeight(newHeight);
-	}
-	
+public abstract class PowerupBlock extends Block{
+	public PowerupBlock(double initialX, double initialY, String imageFilename){
+		super(initialX, initialY, imageFilename);
+	}	
 }

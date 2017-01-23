@@ -16,37 +16,32 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class HClBlock extends PowerupBlock{
-	public final String imageFilename = "hcl.jpg";
+	public static final String IMAGE_FILENAME = "hcl.jpg";
 
-	public HClBlock(double initX, double initY, double w, double h){
-		//Rethink location (i.e. class) of constructor when refactoring
-		imageView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageFilename)));
-		imageView.setFitWidth(w);
-		imageView.setFitHeight(h);
-		imageView.setX(initX);
-		imageView.setY(initY);
+	public HClBlock(double initialX, double initialY){
+		super(initialX, initialY, IMAGE_FILENAME);
 	}
 	
-	@Override
 	public void collisionWithBall(Group group, Scorebar scorebar, Paddle paddle, Ball ball, BlockGrid grid, int r, int c) {
-		//Clear 8 surrounding blocks and hit block as well - be sure to consider edges of grid!
+		//Allowing abbreviations for r, c, dr, and dc naming (here and elsewhere) since only single letters make sense with d (delta) notation 
 		for(int dr = -1; dr <= 1; dr++)
 			for(int dc = -1; dc <= 1; dc++){
 				if(r + dr >= 0 && r + dr < grid.getRows() && c + dc >= 0 && c + dc < grid.getCols() && grid.getBlock(r + dr, c + dc) != null){
-					//Update Scorebar - make sure to do BEFORE remove blocks!
-					if(dr != 0 || dc != 0){
-						if(grid.getBlock(r + dr, c + dc) instanceof GlasswareBlock){
-							scorebar.incrementScore(1);
-						}
-						else if(grid.getBlock(r + dr, c + dc) instanceof PowerupBlock){
-							scorebar.incrementScore(3);
-						}
-					}
-					//Remove
-					group.getChildren().remove(grid.getBlock(r+dr, c+dc).getJavaFXShape());
-					grid.setBlock(null, r + dr, c + dc);   //Consider making a removeBlock() method for these 2 lines in BlockGrid class
+					//Updates scorebar for 8 surrounding blocks (GridBlock class updates for this)
+					updateScorebarSurroundingBlock(grid, scorebar, r, dr, c, dc);
+					//Remove all 9 blocks, including this
+					grid.getBlock(r + dr, c + dc).makeBlockDisappear(group, grid, r + dr, c + dc);
 				}
 			}
 	}
-	
+	private void updateScorebarSurroundingBlock(BlockGrid grid, Scorebar scorebar, int r, int dr, int c, int dc){
+		if(dr != 0 || dc != 0){
+			if(grid.getBlock(r + dr, c + dc) instanceof GlasswareBlock){
+				scorebar.incrementScore(1);
+			}
+			else if(grid.getBlock(r + dr, c + dc) instanceof PowerupBlock){
+				scorebar.incrementScore(3);
+			}
+		}
+	}
 }
