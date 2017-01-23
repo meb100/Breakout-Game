@@ -59,6 +59,8 @@ The following are images needed for the game:
 ### Normal Gameplay Keyboard Input:
 - Space Bar: Proceed to level 1 (on splash screen)
 - Left/Right Arrows: Move hot plate (in a level)
+- A/D: Move hot plate twice as fast as normal (in a level).
+- Q/E: Move hot plate three times as fast as normal (in a level).
 
 ### Cheat Keys:
 - B = Restore all 5 chemical burns
