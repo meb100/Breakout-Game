@@ -38,7 +38,7 @@ public class Driver extends Application {
 	public void start(Stage stage) throws Exception {
 		screens[0] = new Startup();
 		for(int level = 1; level <= NUM_LEVELS; level++){
-			screens[level] = new Level(level, SCREEN_BASE, SCREEN_HEIGHT, FRAME_DELAY_MILLISECONDS);
+			screens[level] = new Level(level);
 		}
 		currentScreenNumber = 0;
 		
