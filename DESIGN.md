@@ -1,4 +1,4 @@
-#Design - Breakout: Laboratory Edition
+# Design - Breakout: Laboratory Edition
 By: Matthew Barbano
 
 ## Goals
