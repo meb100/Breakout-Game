@@ -60,13 +60,13 @@ public class Driver extends Application {
 	 * @param stage
 	 */
 	private void step(Stage stage){
-		if(screens[currentScreenNumber].getStatus() == Screen.NEEDS_SETUP){
+		if(screens[currentScreenNumber].getStatus() == ScreenStatus.NEEDS_SETUP){
 			stage.setScene(screens[currentScreenNumber].initialize());
 		}
-		else if(screens[currentScreenNumber].getStatus() == Screen.RUNNING){
+		else if(screens[currentScreenNumber].getStatus() == ScreenStatus.RUNNING){
 			screens[currentScreenNumber].step();
 		}
-		else if(screens[currentScreenNumber].getStatus() == Screen.WON){
+		else if(screens[currentScreenNumber].getStatus() == ScreenStatus.WON){
 			if(currentScreenNumber == NUM_LEVELS){   //NUM_LEVELS = NUM_SCREENS - 1
 				resetToScreen(0);
 			}
@@ -74,26 +74,26 @@ public class Driver extends Application {
 				resetToScreen(currentScreenNumber + 1);
 			}
 		}
-		else if(screens[currentScreenNumber].getStatus() == Screen.LOST){
+		else if(screens[currentScreenNumber].getStatus() == ScreenStatus.LOST){
 			resetToScreen(0);
 		}
-		else if(screens[currentScreenNumber].getStatus() == Screen.JUMP_TO_LEVEL_1){
+		else if(screens[currentScreenNumber].getStatus() == ScreenStatus.JUMP_TO_LEVEL_1){
 			resetToScreen(1);
 		}
-		else if(screens[currentScreenNumber].getStatus() == Screen.JUMP_TO_LEVEL_2){
+		else if(screens[currentScreenNumber].getStatus() == ScreenStatus.JUMP_TO_LEVEL_2){
 			resetToScreen(2);
 		}
-		else if(screens[currentScreenNumber].getStatus() == Screen.JUMP_TO_LEVEL_3){
+		else if(screens[currentScreenNumber].getStatus() == ScreenStatus.JUMP_TO_LEVEL_3){
 			resetToScreen(3);
 		}
 	}
 	private void resetToScreen(int newScreenNumber){
 		for(int screenNumber = 0; screenNumber < NUM_LEVELS + 1; screenNumber++){
 			if(screenNumber < newScreenNumber){
-				screens[screenNumber].setStatus(Screen.WON);
+				screens[screenNumber].setStatus(ScreenStatus.WON);
 			}
 			else{
-				screens[screenNumber].setStatus(Screen.NEEDS_SETUP);
+				screens[screenNumber].setStatus(ScreenStatus.NEEDS_SETUP);
 			}
 		}
 		currentScreenNumber = newScreenNumber;

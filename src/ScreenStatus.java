@@ -1,0 +1,3 @@
+public enum ScreenStatus {
+	NEEDS_SETUP, RUNNING, WON, LOST, JUMP_TO_LEVEL_1, JUMP_TO_LEVEL_2, JUMP_TO_LEVEL_3;
+}

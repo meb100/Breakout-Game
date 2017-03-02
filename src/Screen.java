@@ -21,24 +21,16 @@ import javafx.util.Duration;
  */
 
 public interface Screen {
-	public static final int NEEDS_SETUP = 0;
-	public static final int RUNNING = 1;
-	public static final int WON = 2;
-	public static final int LOST = 3;
-	public static final int JUMP_TO_LEVEL_1 = 4;
-	public static final int JUMP_TO_LEVEL_2 = 5;
-	public static final int JUMP_TO_LEVEL_3 = 6;
-	
 	/**
 	 * This method returns the value of the field status.
 	 * @return Value of status field
 	 */
-	public int getStatus();
+	public ScreenStatus getStatus();
 	/**
 	 * This method sets the value of the field status to newStatus.
 	 * @param newStatus The new value of status
 	 */
-	public void setStatus(int newStatus);
+	public void setStatus(ScreenStatus newStatus);
 	/**
 	 * Sets up the Scene - for example, instantiating GameObjects, adding them
 	 * to a Group, and listening to keyboard input. It sets the value of status

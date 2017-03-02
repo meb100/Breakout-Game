@@ -52,23 +52,23 @@ public class Level implements Screen{
 	private Paddle paddle;
 	private Scorebar scorebar;
 	private Scene scene;
-	private int status;
+	private ScreenStatus status;
 	private int levelNumber;
 	
 	/**Constructor which sets levelNumber as status. Does not set up GameObjects. Assumes levelNumberToSet is positive integer.
 	 * @param levelNumberToSet The level number of this Level*/
 	public Level(int levelNumberToSet){
 		levelNumber = levelNumberToSet;
-		status = Screen.NEEDS_SETUP;
+		status = ScreenStatus.NEEDS_SETUP;
 	}
 	/**Returns the value of status.
 	 * @return Value of status*/
-	public int getStatus(){
+	public ScreenStatus getStatus(){
 		return status;
 	}
 	/**Sets the value of status.
 	 * @param newStatus The new value of status*/
-	public void setStatus(int newStatus){
+	public void setStatus(ScreenStatus newStatus){
 		status = newStatus;
 	}
 	/**Returns true if location (r, c) is not null in blockGrid. Abbreviations "r" and "c" are
@@ -89,7 +89,7 @@ public class Level implements Screen{
 		
 		addGameObjectsToGroup();
 		
-		setStatus(Screen.RUNNING);
+		setStatus(ScreenStatus.RUNNING);
 		setupKeyboardInput();        
 		
 		return scene;
@@ -192,13 +192,13 @@ public class Level implements Screen{
 	/**Checks if there are no more lives left and if so sets status to Screen.LOST*/
 	private void handleGameOver(){
 		if(scorebar.getLivesLeft() <= 0){
-			setStatus(Screen.LOST);
+			setStatus(ScreenStatus.LOST);
 		}
 	}
 	/**Checks if grid is clear and if so, sets status to Screen.WON*/
 	private void handleWonLevel(){
 		if(gridIsClear()){
-			setStatus(Screen.WON);
+			setStatus(ScreenStatus.WON);
 		}
 	}
 	/**Returns true if all blocks are null in blockGrid
@@ -264,13 +264,13 @@ public class Level implements Screen{
 	/**Updates cheat keys for jumping between levels. @param keyCode*/
 	private void updateJumpToLevelKeys(KeyCode keyCode){
 		if(keyCode == KeyCode.DIGIT1){
-			setStatus(Screen.JUMP_TO_LEVEL_1);
+			setStatus(ScreenStatus.JUMP_TO_LEVEL_1);
 		}
 		else if(keyCode == KeyCode.DIGIT2){
-			setStatus(Screen.JUMP_TO_LEVEL_2);
+			setStatus(ScreenStatus.JUMP_TO_LEVEL_2);
 		}
 		else if(keyCode == KeyCode.DIGIT3){
-			setStatus(Screen.JUMP_TO_LEVEL_3);
+			setStatus(ScreenStatus.JUMP_TO_LEVEL_3);
 		}
 	}
 	/**Updates all cheat keys. 

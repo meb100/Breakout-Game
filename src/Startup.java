@@ -30,15 +30,15 @@ public class Startup implements Screen{
 	private ImageView rules;
 	private Text start;
 	private Scene scene;
+	private ScreenStatus status;
 	
-	private int status;
 	public Startup(){
-		status = Screen.NEEDS_SETUP;
+		status = ScreenStatus.NEEDS_SETUP;
 	}
-	public int getStatus(){
+	public ScreenStatus getStatus(){
 		return status;
 	}
-	public void setStatus(int newStatus){
+	public void setStatus(ScreenStatus newStatus){
 		status = newStatus;
 	}
 	public Scene initialize(){
@@ -50,7 +50,7 @@ public class Startup implements Screen{
 		setupStart();
 
     	root.getChildren().addAll(logo, rules, start);
-    	status = Screen.RUNNING;
+    	status = ScreenStatus.RUNNING;
     	scene.setOnKeyPressed(e -> keyboardInput(e.getCode()));
     	
     	return scene;
@@ -59,7 +59,7 @@ public class Startup implements Screen{
 	}
 	private void keyboardInput(KeyCode code){
 		if(code == KeyCode.SPACE){
-			status = Screen.WON;
+			status = ScreenStatus.WON;
 		}
 		if(code == KeyCode.R){
 			scene.setFill(Color.RED);
